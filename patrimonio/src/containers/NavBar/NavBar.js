@@ -16,6 +16,12 @@ import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
 import ChartCard from '../../components/ChartCard/ChartCard';
+import ChartCardFlag1 from '../FlagsCharts/Flag1/ChartCardFlag1';
+import ChartCardFlag2 from '../FlagsCharts/Flag2/ChartCardFlag2';
+import ChartCardFlag3 from '../FlagsCharts/Flag3/ChartCardFlag3';
+import ChartCardFlag4 from '../FlagsCharts/Flag4/ChartCardFlag4';
+import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
+
 import Slider from '../Slider/Slider';
 
 import Grid from '@material-ui/core/Grid';
@@ -60,7 +66,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={4}>
           <Typography component={'span'} variant={'body2'}>{children}</Typography>
         </Box>
       )}
@@ -95,10 +101,11 @@ export default function CenteredTabs(props) {
             }}
           centered
         >
-          <Tab label="General" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(0)} />
-          <Tab label="Composiciones" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(1)} />
-          <Tab label="Lista Servidores Públicos" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(2)} />
-          <Tab label="Servidor Público" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(3)} />
+          <Tab label="Bandera 1" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(0)} />
+          <Tab label="Bandera 2" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(1)} />
+          <Tab label="Bandera 3" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(2)} />
+          <Tab label="Bandera 4" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(3)} />
+          <Tab label="Bandera 5" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(4)} />
         </Tabs>
       </Paper>
 
@@ -119,7 +126,8 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Fecha final del concurso - Fecha incial del concurso"/>
         <Grid item sm container xs={6}>
             <FiltersCard />
-            <ChartCard />
+            //<ChartCard />
+            <ChartCardFlag1 />
 
           </Grid>
         </Grid>
@@ -140,6 +148,7 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Obteniendo el promedio del número de licitantes de los procesos de contratación abierta"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <ChartCardFlag2 />
 
           </Grid>
         </Grid>
@@ -160,6 +169,7 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Número total de procesos de contratación adjudicados por métodos competitivos / número total de procesos de contratación"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <ChartCardFlag3 />
 
           </Grid>
         </Grid>
@@ -185,10 +195,38 @@ export default function CenteredTabs(props) {
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <ChartCardFlag4 />
 
           </Grid>
         </Grid>
       </TabPanel>
+      <TabPanel value={props.value} index={4}>
+        <Grid container className={classes.dashboard}>
+          <TitleCard title="Exploración de datos a nivel de servidor público"/>
+          <PhaseCard phase="Adjudicación/" phas="Contrato" />
+          <RedFlagCard
+            info={<p>
+              Una diferencia significativa entre el precio de adjudicación y el precio final del contrato puede ser señal de:
+                <li>Existencia de acuerdos "a puerta cerrada" entre proveedores y compradores. En algunos casos, el licitante ofrece un precio artificialmente bajo para ganar un contrato y luego aumenta los precios a través de enmiendas del contrato durante su implementación.</li>
+                <li>Mala planificación en los procesos de adjudicación. En algunos casos se subestima el costo del bien y servicio, reportando un monto de adjudicación muy pequeño con respecto al monto final del contrato.</li>
+              </p>}/>
+          <InfoCard
+            info={<p>
+              <li>ID de adjudicación</li>
+              <li>Monto de adjudicación</li>
+              <li>ID del contrato</li>
+              <li>Monto del contrato</li>
+            </p>}
+          />
+          <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
+          <Grid item sm container xs={6}>
+            <FiltersCard />
+            <ChartCardFlag5 />
+
+          </Grid>
+        </Grid>
+      </TabPanel>
+
 
     </div>
   );

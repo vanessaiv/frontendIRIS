@@ -1,0 +1,14 @@
+{
+    "labels": ["Sin fecha de inicio", "Sin fecha final", "Duración negativa"],
+    "datasets": [
+    {
+        "backgroundColor": ["yellow","pink","lime"],
+        "borderWidth": 0,
+        "data": [
+        65,
+        35,
+        25
+      ]
+    }
+  ]
+}

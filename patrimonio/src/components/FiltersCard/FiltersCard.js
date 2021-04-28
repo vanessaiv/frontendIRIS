@@ -67,6 +67,9 @@ export default function ComplexGrid(props) {
             <DatePicker />
           </Grid>
           <Grid item xs={12} spacing={3}>
+            <DatePicker />
+          </Grid>
+          <Grid item xs={12} spacing={3}>
             <Typography className={classes.body} color="textSecondary">Selecciona el rango de días que estuvo abierto el proceso de contratación:</Typography>
           </Grid>
           <Grid item xs={12} spacing={3}>

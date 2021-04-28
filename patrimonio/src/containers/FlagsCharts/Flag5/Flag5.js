@@ -56,9 +56,9 @@ const colors = [
   {
     // lime
     borderWidth: 0,
-    borderColor: "lime",
-    backgroundColor: "lime",
-    pointBackgroundColor: "lime"
+    borderColor: "mediumturquoise",
+    backgroundColor: "mediumturquoise",
+    pointBackgroundColor: "mediumturquoise"
   }
 ];
 
@@ -152,10 +152,10 @@ export class Charts extends React.Component {
     return (
       <div className="row">
 
-        <div className="col-lg-6 py-3">
+        <div className="col-lg-12 py-3">
           <div className="card shadow">
             <div className="card-body text-center">
-              <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+              <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
               <Bar
                 data={this.mergeColorsIntoData(dataBarChart)}
                 options={this.optionsBar()}
@@ -167,7 +167,7 @@ export class Charts extends React.Component {
         <div className="col-lg-6 py-3">
           <div className="card shadow">
             <div className="card-body text-center">
-              <h5 className="mb-4">Evolución de los ingresos y salarios</h5>
+              <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de los ingresos y salarios</h5>
               <Line
                 ref="chart1"
                 data={this.mergeColorsIntoData(this.state.dataLineChart)}
@@ -180,7 +180,7 @@ export class Charts extends React.Component {
         <div className="col-lg-6 py-3">
           <div className="card shadow">
             <div className="card-body text-center">
-              <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+              <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
               <Bar
                 data={this.mergeColorsIntoData(dataBarChart)}
                 options={this.optionsBar()}
@@ -192,7 +192,7 @@ export class Charts extends React.Component {
         <div className="col-sm-6 py-3">
           <div className="card shadow">
             <div className="card-body text-center">
-              <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+              <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
               <Donut
                 height={50}
                 width={50}
@@ -207,7 +207,7 @@ export class Charts extends React.Component {
         <div className="col-sm-6 py-3">
           <div className="card shadow">
             <div className="card-body text-center">
-              <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+              <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
               <Donut
                 height={50}
                 width={50}

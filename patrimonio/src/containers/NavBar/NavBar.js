@@ -126,7 +126,7 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Fecha final del concurso - Fecha incial del concurso"/>
         <Grid item sm container xs={6}>
             <FiltersCard />
-            //<ChartCard />
+          {/*<ChartCard />*/}
             <ChartCardFlag1 />
 
           </Grid>

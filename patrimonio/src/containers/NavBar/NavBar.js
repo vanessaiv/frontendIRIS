@@ -21,6 +21,7 @@ import ChartCardFlag2 from '../FlagsCharts/Flag2/ChartCardFlag2';
 import ChartCardFlag3 from '../FlagsCharts/Flag3/ChartCardFlag3';
 import ChartCardFlag4 from '../FlagsCharts/Flag4/ChartCardFlag4';
 import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
+import MixedChart from '../FlagsCharts/flagtest';
 
 import Slider from '../Slider/Slider';
 
@@ -128,6 +129,7 @@ export default function CenteredTabs(props) {
             <FiltersCard />
           {/*<ChartCard />*/}
             <ChartCardFlag1 />
+            <MixedChart />
 
           </Grid>
         </Grid>

@@ -21,7 +21,12 @@ import ChartCardFlag2 from '../FlagsCharts/Flag2/ChartCardFlag2';
 import ChartCardFlag3 from '../FlagsCharts/Flag3/ChartCardFlag3';
 import ChartCardFlag4 from '../FlagsCharts/Flag4/ChartCardFlag4';
 import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
+
 import MixedChart from '../FlagsCharts/flagtest';
+import MixedChart2 from '../FlagsCharts/flag2test';
+import MixedChart5 from '../FlagsCharts/flag5test';
+import DonutChart from '../FlagsCharts/donuttest';
+import BarChart from '../FlagsCharts/bartest';
 
 import Slider from '../Slider/Slider';
 
@@ -128,8 +133,10 @@ export default function CenteredTabs(props) {
         <Grid item sm container xs={6}>
             <FiltersCard />
           {/*<ChartCard />*/}
-            <ChartCardFlag1 />
-            <MixedChart />
+          {/*<ChartCardFlag1 />*/}
+            <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
+            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
 
           </Grid>
         </Grid>
@@ -150,7 +157,11 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Obteniendo el promedio del número de licitantes de los procesos de contratación abierta"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
-            <ChartCardFlag2 />
+            {/*<ChartCardFlag2 />*/}
+            <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
+            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/"/>
+            <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"/>
+
 
           </Grid>
         </Grid>
@@ -198,6 +209,7 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             <ChartCardFlag4 />
+            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/"/>
 
           </Grid>
         </Grid>
@@ -223,7 +235,10 @@ export default function CenteredTabs(props) {
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
-            <ChartCardFlag5 />
+            {/*<ChartCardFlag5 />*/}
+            <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
+            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/"/>
+            <BarChart call="/api/red_flag_5/get_resumen_integridad_de_datos_enmiendas/"/>
 
           </Grid>
         </Grid>

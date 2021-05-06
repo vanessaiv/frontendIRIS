@@ -71,9 +71,9 @@ class MixedChart extends Component {
     var amounts = [];
     API.post(this.props.call,
       {
-        "numero_contratos":"100",
-        "fecha_inicio": "2016-12-08",
-        "fecha_fin": "2018-11-01"
+        "numero_enmiendas":"",
+        "fecha_inicio": "",
+        "fecha_fin": ""
 
       })
             .then(response => {

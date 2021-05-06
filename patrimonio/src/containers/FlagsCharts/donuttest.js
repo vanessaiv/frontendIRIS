@@ -4,9 +4,11 @@ import {
   defaults,
   Line,
   Bar,
+  Pie,
+  Pie as Donut,
+  Bubble,
+  Radar
 } from "react-chartjs-2";
-
-const rand = () => Math.round(Math.random() * 20 - 10);
 
 
 const colors = [
@@ -50,7 +52,7 @@ const colors = [
     }
   ];
 
-class MixedChart extends Component {
+class DonutGrafica extends Component {
 
   constructor(props) {
     super(props)
@@ -58,8 +60,7 @@ class MixedChart extends Component {
     this.newCounter = [1];
     this.state = {
       labels:[],
-      datasets:[],
-      amounts:[],
+      datasets:[]
     }
   }
 
@@ -68,79 +69,100 @@ class MixedChart extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
-    var amounts = [];
-    API.post(this.props.call,
-      {
-        "numero_contratos":"100",
-        "fecha_inicio": "2016-12-08",
-        "fecha_fin": "2018-11-01"
-
-      })
+    API.post(this.props.call)
             .then(response => {
 
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item["contractId"]);
-                amounts.push(Math.round(item["totalAmount"]/1000000));
+                console.log(datasets_t);
+                console.log(arreglo_tags);
               });
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
+                  console.log(this.state);
                   index++;
                 }
 
-                index = 0;
-                while (index < datasets_t.length) {
-                  this.setState(prevState => ({
-                      datasets: [...prevState.datasets, datasets_t[index]]
-                  }))
-
-                  this.setState(prevState => ({
-                      amounts: [...prevState.amounts, amounts[index]]
-                  }))
-                    index++;
-                  }
-                  console.log(this.state.datasets);
-                  console.log(this.state.amounts);
+              index = 0;
+              while (index < datasets_t.length) {
+                this.setState(prevState => ({
+                    datasets: [...prevState.datasets, datasets_t[index]]
+                }))
+                  index++;
+                }
             }).catch(error => {
                 console.log(error);
             });
   }
 
+  optionsDonut() {
+    return {
+      cutoutPercentage: 65,
+      legend: {
+        position: "bottom",
+        labels: {
+          pointStyle: "circle",
+          usePointStyle: true
+        }
+      }
+    };
+  }
 
 
-
+  mergeColorsIntoPieData(srcData) {
+    /* This function merges from "global" colors array into pie data colors.
+     * Since pie charts use an arr of backgroundColor for each pie segment, we
+     * resample from the other color arr indexes and push onto backgroundColor
+    */
+    return {
+      ...srcData,
+      datasets: srcData.datasets.map((dataset, k) => {
+        colors[k].backgroundColor = [colors[k].backgroundColor.toString()];
+        colors[k].backgroundColor.push(
+          colors[k + 1].backgroundColor.toString()
+        );
+        colors[k].backgroundColor.push(
+          colors[k + 2].backgroundColor.toString()
+        );
+        return { ...dataset, ...colors[k] };
+      })
+    };
+  }
 
   render() {
-
+    console.log(this.state.datasets);
     this.data  = {
-      datasets: [{
-           label: 'Bar Dataset',
-           type: 'bar',
-           data: this.state.datasets,
-           backgroundColor: 'red',
-            order: 2
-        }, {
-            type: 'line',
-            label: 'Dataset 1',
-            borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
-            borderWidth: 2,
-            fill: false,
-            data: this.state.datasets,
-             order: 1
-     }],
-     labels: this.state.labels
-
+ labels: this.state.labels,
+ datasets: [
+   {
+     label: 'My First dataset',
+     backgroundColor: 'rgba(255,99,132,0.2)',
+     borderColor: 'rgba(255,99,132,1)',
+     borderWidth: 1,
+     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+     hoverBorderColor: 'rgba(255,99,132,1)',
+     data: this.state.datasets,
+   }
+ ]
 }
+console.log(this.data);
     return (
-      <div className="col-sm-12 py-3">
+      <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Bar data={this.data }/>
+            <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <Donut
+              height={50}
+              width={50}
+              responsive={true}
+              options={this.optionsDonut()}
+              data={this.mergeColorsIntoPieData(this.data)}
+            />
           </div>
         </div>
       </div>
@@ -151,4 +173,4 @@ class MixedChart extends Component {
 }
 
 
-export default MixedChart;
+export default DonutGrafica;

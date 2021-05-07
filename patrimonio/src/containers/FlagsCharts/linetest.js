@@ -52,7 +52,7 @@ const colors = [
     }
   ];
 
-class DonutGrafica extends Component {
+class BarGrafica extends Component {
 
   constructor(props) {
     super(props)
@@ -69,14 +69,20 @@ class DonutGrafica extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
-    var id = this.props.id;
-    API.post(this.props.call, this.props.params)
+    API.post(this.props.call,
+      {
+        "percentage_inicial": "",
+        "percentage_final": "",
+        "fecha_inicio": "",
+        "fecha_fin": ""
+      }
+    )
             .then(response => {
 
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
-                datasets_t.push(item[id]);
+                datasets_t.push(item["contractValue"]);
                 console.log(datasets_t);
                 console.log(arreglo_tags);
               });
@@ -101,7 +107,7 @@ class DonutGrafica extends Component {
             });
   }
 
-  optionsDonut() {
+  optionsLine() {
     return {
       cutoutPercentage: 65,
       legend: {
@@ -115,7 +121,7 @@ class DonutGrafica extends Component {
   }
 
 
-  mergeColorsIntoPieData(srcData) {
+  mergeColorsIntoLineData(srcData) {
     /* This function merges from "global" colors array into pie data colors.
      * Since pie charts use an arr of backgroundColor for each pie segment, we
      * resample from the other color arr indexes and push onto backgroundColor
@@ -157,12 +163,10 @@ console.log(this.data);
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Donut
-              height={50}
-              width={50}
+            <Line
               responsive={true}
-              options={this.optionsDonut()}
-              data={this.mergeColorsIntoPieData(this.data)}
+              options={this.optionsLine()}
+              data={this.mergeColorsIntoLineData(this.data)}
             />
           </div>
         </div>
@@ -174,4 +178,4 @@ console.log(this.data);
 }
 
 
-export default DonutGrafica;
+export default BarGrafica;

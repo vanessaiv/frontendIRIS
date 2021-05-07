@@ -24,9 +24,12 @@ import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
 
 import MixedChart from '../FlagsCharts/flagtest';
 import MixedChart2 from '../FlagsCharts/flag2test';
+import MixedChart3 from '../FlagsCharts/flag3test';
+import MixedChart4 from '../FlagsCharts/flag4test';
 import MixedChart5 from '../FlagsCharts/flag5test';
 import DonutChart from '../FlagsCharts/donuttest';
 import BarChart from '../FlagsCharts/bartest';
+import LineChart from '../FlagsCharts/linetest';
 
 import Slider from '../Slider/Slider';
 
@@ -135,7 +138,7 @@ export default function CenteredTabs(props) {
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
             <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
-            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/"/>
+            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/" id="contractId"/>
             <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
 
           </Grid>
@@ -159,7 +162,7 @@ export default function CenteredTabs(props) {
             <FiltersCard />
             {/*<ChartCardFlag2 />*/}
             <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
-            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/"/>
+            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"/>
             <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"/>
 
 
@@ -182,7 +185,9 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Número total de procesos de contratación adjudicados por métodos competitivos / número total de procesos de contratación"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
-            <ChartCardFlag3 />
+            {/*<ChartCardFlag3 />*/}
+            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"/>
+            <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
 
           </Grid>
         </Grid>
@@ -208,8 +213,23 @@ export default function CenteredTabs(props) {
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
-            <ChartCardFlag4 />
-            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/"/>
+            {/*<ChartCardFlag4 />*/}
+            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"/>
+            <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <MixedChart4 call="/api/red_flag_4/montos_adjudicacion_contrato/"/>
+            <DonutChart call="/api/red_flag_4/distribucion_de_montos_adjudicados/" id="contractValue"
+              params={{
+	               "percentage_inicial":"",
+	               "percentage_final":"",
+	               "fecha_inicio": "",
+	               "fecha_fin": ""}}/>
+               <DonutChart call="/api/red_flag_4/distribucion_de_montos_contratados/" id="awardValue"
+              params={{
+  	              "percentage_inicial":"",
+  	              "percentage_final":"",
+  	              "fecha_inicio": "",
+  	              "fecha_fin": ""}}/>
 
           </Grid>
         </Grid>
@@ -237,7 +257,7 @@ export default function CenteredTabs(props) {
             <FiltersCard />
             {/*<ChartCardFlag5 />*/}
             <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
-            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/"/>
+            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"/>
             <BarChart call="/api/red_flag_5/get_resumen_integridad_de_datos_enmiendas/"/>
 
           </Grid>

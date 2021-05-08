@@ -60,6 +60,7 @@ class MixedChart extends Component {
       labels:[],
       datasets:[],
       amounts:[],
+      acumulados:[],
     }
   }
 
@@ -68,7 +69,10 @@ class MixedChart extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
-    var amounts = [];
+    var amounts = []; //revisar
+    var valor_acumulado = 0;
+    var total = 0;
+    var acumulado = 0;
     API.post(this.props.call,
       {
         "numero_contratos":"100",
@@ -82,7 +86,8 @@ class MixedChart extends Component {
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item["contractId"]);
-                amounts.push(Math.round(item["totalAmount"]/1000000));
+                total = datasets_t.reduce((a, b) => a + b, 0)
+                //amounts.push(Math.round(item["totalAmount"]/1000000));
               });
               var index = 0;
               while (index < arreglo_tags.length) {
@@ -97,14 +102,16 @@ class MixedChart extends Component {
                   this.setState(prevState => ({
                       datasets: [...prevState.datasets, datasets_t[index]]
                   }))
-
+                  acumulado += datasets_t[index]
+                  valor_acumulado = (acumulado/total)*100
                   this.setState(prevState => ({
-                      amounts: [...prevState.amounts, amounts[index]]
+                      acumulados: [...prevState.acumulados, valor_acumulado]
                   }))
                     index++;
                   }
                   console.log(this.state.datasets);
-                  console.log(this.state.amounts);
+                  console.log(total);
+                  console.log(this.state.acumulados);
             }).catch(error => {
                 console.log(error);
             });
@@ -122,17 +129,31 @@ class MixedChart extends Component {
            type: 'bar',
            data: this.state.datasets,
            backgroundColor: 'red',
-            order: 2
+           order: 2
         }, {
             type: 'line',
             label: 'Dataset 1',
             borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
             borderWidth: 2,
-            fill: false,
-            data: this.state.datasets,
-             order: 1
+            fill: true,
+            data: this.state.acumulados,
+            order: 1
      }],
-     labels: this.state.labels
+     labels: this.state.labels,
+     options: {
+       scales: {
+         yAxes: [{
+             display: true,
+             position: 'left',
+             type: "linear",
+             id: "A"
+           }, {
+               display: true,
+         position: 'right',
+         type: "linear",
+           id: "B"
+         }]
+           }}
 
 }
     return (

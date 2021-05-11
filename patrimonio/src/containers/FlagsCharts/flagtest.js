@@ -129,7 +129,8 @@ class MixedChart extends Component {
            type: 'bar',
            data: this.state.datasets,
            backgroundColor: 'red',
-           order: 2
+           order: 2,
+           yAxisID: 'A'
         }, {
             type: 'line',
             label: 'Dataset 1',
@@ -137,23 +138,11 @@ class MixedChart extends Component {
             borderWidth: 2,
             fill: true,
             data: this.state.acumulados,
-            order: 1
+            order: 1,
+            yAxisID: 'B'
      }],
      labels: this.state.labels,
-     options: {
-       scales: {
-         yAxes: [{
-             display: true,
-             position: 'left',
-             type: "linear",
-             id: "A"
-           }, {
-               display: true,
-         position: 'right',
-         type: "linear",
-           id: "B"
-         }]
-           }}
+
 
 }
     return (
@@ -161,7 +150,21 @@ class MixedChart extends Component {
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Bar data={this.data }/>
+            <Bar data={this.data }
+                  options={{
+                    scales: {
+                      yAxes: [{
+                          display: true,
+                          position: 'left',
+                          type: "linear",
+                          id: "A"
+                        }, {
+                            display: true,
+                      position: 'right',
+                      type: "linear",
+                        id: "B"
+                      }]
+                        }}}/>
           </div>
         </div>
       </div>

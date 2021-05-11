@@ -60,7 +60,8 @@ class BarGrafica extends Component {
     this.newCounter = [1];
     this.state = {
       labels:[],
-      datasets:[]
+      datasets:[],
+      datasetsa:[]
     }
   }
 
@@ -69,6 +70,7 @@ class BarGrafica extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
+    var datasets_a = [];
     API.post(this.props.call,
       {
         "percentage_inicial": "",
@@ -83,6 +85,7 @@ class BarGrafica extends Component {
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item["contractValue"]);
+                datasets_a.push(item["awardValue"]);
                 console.log(datasets_t);
                 console.log(arreglo_tags);
               });
@@ -100,7 +103,12 @@ class BarGrafica extends Component {
                 this.setState(prevState => ({
                     datasets: [...prevState.datasets, datasets_t[index]]
                 }))
-                  index++;
+
+                this.setState(prevState => ({
+                    datasetsa: [...prevState.datasetsa, datasets_a[index]]
+                }))
+
+                index++;
                 }
             }).catch(error => {
                 console.log(error);
@@ -144,19 +152,34 @@ class BarGrafica extends Component {
   render() {
     console.log(this.state.datasets);
     this.data  = {
- labels: this.state.labels,
- datasets: [
-   {
-     label: 'My First dataset',
-     backgroundColor: 'rgba(255,99,132,0.2)',
-     borderColor: 'rgba(255,99,132,1)',
-     borderWidth: 1,
-     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-     hoverBorderColor: 'rgba(255,99,132,1)',
-     data: this.state.datasets,
-   }
- ]
-}
+      labels: this.state.labels,
+      datasets: [
+       {
+         label: 'My First dataset',
+         yAxisID: 'A',
+         backgroundColor: 'rgba(255,99,132,0.2)',
+         borderColor: 'rgba(255,99,132,1)',
+         borderWidth: 1,
+         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+         hoverBorderColor: 'rgba(255,99,132,1)',
+         data: this.state.datasets,
+         order: 2,
+       },
+       {
+         label: 'My First dataset1',
+         yAxisID: 'B',
+         backgroundColor: 'rgba(230,80,112,0.2)',
+         borderColor: 'rgba(230,80,112,1)',
+         borderWidth: 1,
+         hoverBackgroundColor: 'rgba(230,80,112,0.4)',
+         hoverBorderColor: 'rgba(230,80,112,1)',
+         data: this.state.datasetsa,
+         order: 1,
+       }
+     ],
+
+  }
+
 console.log(this.data);
     return (
       <div className="col-sm-6 py-3">
@@ -165,8 +188,23 @@ console.log(this.data);
             <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
             <Line
               responsive={true}
-              options={this.optionsLine()}
-              data={this.mergeColorsIntoLineData(this.data)}
+              data={this.data}
+              options={{
+                scales: {
+                  yAxes: [{
+                    display: true,
+                    id: 'A',
+                    type: 'linear',
+                    position: 'left',
+                    
+                  }, {
+                    display: true,
+                    id: 'B',
+                    type: 'linear',
+                    position: 'right',
+                  }]
+                }
+              }}
             />
           </div>
         </div>

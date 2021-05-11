@@ -59,6 +59,7 @@ class MixedChart extends Component {
     this.state = {
       labels:[],
       datasets:[],
+      datasetsa:[],
       amounts:[],
     }
   }
@@ -68,6 +69,7 @@ class MixedChart extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
+    var datasets_a = [];
     var amounts = [];
     API.post(this.props.call,
       {
@@ -83,6 +85,7 @@ class MixedChart extends Component {
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item["contractValue"]);
+                datasets_a.push(item["awardValue"]);
                 amounts.push(Math.round(item["totalAmount"]/1000000));
               });
               var index = 0;
@@ -100,12 +103,17 @@ class MixedChart extends Component {
                   }))
 
                   this.setState(prevState => ({
+                      datasetsa: [...prevState.datasetsa, datasets_a[index]]
+                  }))
+
+                  this.setState(prevState => ({
                       amounts: [...prevState.amounts, amounts[index]]
                   }))
                     index++;
                   }
+                  console.log('Esta es la bandera 4');
                   console.log(this.state.datasets);
-                  console.log(this.state.amounts);
+                  console.log(this.state.datasetsa);
             }).catch(error => {
                 console.log(error);
             });
@@ -123,15 +131,17 @@ class MixedChart extends Component {
            type: 'bar',
            data: this.state.datasets,
            backgroundColor: 'red',
-            order: 2
+           order: 2,
+           yAxisID: 'A',
         }, {
-            type: 'line',
+            type: 'bar',
             label: 'Dataset 1',
             borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
             borderWidth: 2,
             fill: false,
-            data: this.state.datasets,
-             order: 1
+            data: this.state.datasetsa,
+            order: 1,
+            yAxisID: 'B',
      }],
      labels: this.state.labels
 
@@ -141,7 +151,23 @@ class MixedChart extends Component {
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Bar data={this.data }/>
+            <Bar data={this.data }
+                options={{
+                  scales: {
+                    yAxes: [{
+                      display: true,
+                      id: 'A',
+                      type: 'linear',
+                      position: 'left',
+
+                    }, {
+                      display: true,
+                      id: 'B',
+                      type: 'linear',
+                      position: 'right',
+                    }]
+                  }
+                }}/>
           </div>
         </div>
       </div>

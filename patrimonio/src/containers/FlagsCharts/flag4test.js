@@ -130,7 +130,7 @@ class MixedChart extends Component {
            label: 'Bar Dataset',
            type: 'bar',
            data: this.state.datasets,
-           backgroundColor: 'red',
+           backgroundColor: '#ffc62b',
            order: 2,
            yAxisID: 'A',
         }, {

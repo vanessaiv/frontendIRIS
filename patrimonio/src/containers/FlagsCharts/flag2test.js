@@ -124,15 +124,15 @@ class MixedChart extends Component {
 
     this.data  = {
       datasets: [{
-           label: 'Bar Dataset',
+           label: 'Número de contratos',
            type: 'bar',
            data: this.state.datasets,
-           backgroundColor: 'red',
+           backgroundColor: '#ffc62b',
            order: 2,
            yAxisID: 'A'
         }, {
             type: 'line',
-            label: 'Dataset 1',
+            label: 'Porcentaje',
             borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
             borderWidth: 2,
             fill: true,
@@ -155,14 +155,27 @@ class MixedChart extends Component {
                           display: true,
                           position: 'left',
                           type: "linear",
-                          id: "A"
+                          id: "A",
+                          gridLines: {
+                            display: false
+                          }
                         }, {
+                          display: true,
+                          position: 'right',
+                          type: "linear",
+                          id: "B"
+                      }],
+                      xAxes: [ {
+                          display: true,
+                          scaleLabel: {
                             display: true,
-                      position: 'right',
-                      type: "linear",
-                        id: "B"
-                      }]
-                        }}}/>
+                            labelString: 'Número de oferentes'
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                        }]
+                    }}}/>
           </div>
         </div>
       </div>

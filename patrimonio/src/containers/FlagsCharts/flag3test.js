@@ -116,19 +116,22 @@ class MixedChart extends Component {
 
     this.data  = {
       datasets: [{
-           label: 'Bar Dataset',
+           label: 'Monto de los contratos',
            type: 'bar',
            data: this.state.datasets,
-           backgroundColor: 'red',
-            order: 2
-        }, {
-            type: 'line',
-            label: 'Dataset 1',
-            borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
-            borderWidth: 2,
-            fill: false,
-            data: this.state.datasets,
-             order: 1
+           backgroundColor: '#ffc62b',
+           order: 2,
+           yAxisID: 'A'
+        },
+        {
+          type: 'line',
+          label: 'Número de contratos',
+          borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
+          borderWidth: 2,
+          fill: false,
+          data: this.state.amounts,
+          order: 1,
+          yAxisID: 'B'
      }],
      labels: this.state.labels
 
@@ -138,7 +141,34 @@ class MixedChart extends Component {
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Bar data={this.data }/>
+            <Bar data={this.data }
+                  options={{
+                    scales: {
+                      yAxes: [{
+                          display: true,
+                          position: 'left',
+                          type: "linear",
+                          id: "A",
+                          gridLines: {
+                            display: false
+                          }
+                        }, {
+                          display: true,
+                          position: 'right',
+                          type: "linear",
+                          id: "B"
+                      }],
+                      xAxes: [ {
+                          display: true,
+                          scaleLabel: {
+                            display: true,
+                            labelString: 'Método de adjudicación'
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                        }]
+                    }}}/>
           </div>
         </div>
       </div>

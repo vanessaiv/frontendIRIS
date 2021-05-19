@@ -44,7 +44,8 @@ const useStyles = makeStyles({
   },
   flags: {
     color: '#26c6da',
-    fontSize: 15
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   indicator: {
     backgroundColor: '#26c6da'

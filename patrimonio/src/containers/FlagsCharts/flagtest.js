@@ -149,7 +149,7 @@ class MixedChart extends Component {
       <div className="col-sm-12 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
             <Bar data={this.data }
                   options={{
                     scales: {
@@ -167,7 +167,7 @@ class MixedChart extends Component {
                           type: "linear",
                           id: "B"
                       }],
-                      xAxes: [ {
+                      xAxes: [{
                           display: true,
                           scaleLabel: {
                             display: true,
@@ -177,7 +177,18 @@ class MixedChart extends Component {
                             display: false
                           }
                         }]
-                    }}}/>
+                    },
+                    legend: {
+                      position: "bottom",
+                      labels: {
+                        pointStyle: "circle",
+                        usePointStyle: true,
+                        fontSize: 16,
+                        padding: 13,
+
+                      }
+                    }
+                  }}/>
           </div>
         </div>
       </div>

@@ -127,7 +127,7 @@ class MixedChart extends Component {
 
     this.data  = {
       datasets: [{
-           label: 'Bar Dataset',
+           label: 'Adjudicación',
            type: 'bar',
            data: this.state.datasets,
            backgroundColor: '#ffc62b',
@@ -135,7 +135,7 @@ class MixedChart extends Component {
            yAxisID: 'A',
         }, {
             type: 'bar',
-            label: 'Dataset 1',
+            label: 'Contrato',
             borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
             borderWidth: 2,
             fill: false,
@@ -150,7 +150,7 @@ class MixedChart extends Component {
       <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">Monto de adjudicación, monto de contrato y diferencia porcentual</h5>
             <Bar data={this.data }
                 options={{
                   scales: {
@@ -159,13 +159,25 @@ class MixedChart extends Component {
                       id: 'A',
                       type: 'linear',
                       position: 'left',
+                      labelString: 'Monto (MDP)'
 
                     }, {
                       display: true,
                       id: 'B',
                       type: 'linear',
                       position: 'right',
-                    }]
+                      labelString: '([Contrato]-[Adjudicación])/[Adjudicación]'
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Método de adjudicación'
+                        },
+                        gridLines: {
+                          display: false
+                        }
+                      }]
                   }
                 }}/>
           </div>

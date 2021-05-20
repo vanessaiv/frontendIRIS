@@ -139,8 +139,10 @@ export default function CenteredTabs(props) {
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
             <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
-            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/" id="contractId"/>
-            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
+            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/" id="contractId"
+              plotLabel="Integridad de los datos para el cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"
+              plotLabel="Resumen de la integridad de los datos para el cálculo de la bandera"/>
 
           </Grid>
         </Grid>
@@ -163,8 +165,10 @@ export default function CenteredTabs(props) {
             <FiltersCard />
             {/*<ChartCardFlag2 />*/}
             <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
-            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"/>
-            <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"/>
+            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"
+              plotLabel="Calidad de los datos para el cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"
+              plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
 
 
           </Grid>
@@ -187,7 +191,8 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag3 />*/}
-            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"/>
+            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"
+              plotLabel="Distribución de contratos por método de adjudicación"/>
             <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
 
           </Grid>
@@ -215,8 +220,10 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag4 />*/}
-            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"/>
-            <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"/>
+            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"
+              plotLabel="Calidad de los datos para cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"
+              plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
             <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
             <MixedChart4 call="/api/red_flag_4/montos_adjudicacion_contrato/"/>
             <DonutChart call="/api/red_flag_4/distribucion_de_montos_adjudicados/" id="contractValue"
@@ -224,13 +231,15 @@ export default function CenteredTabs(props) {
 	               "percentage_inicial":"",
 	               "percentage_final":"",
 	               "fecha_inicio": "",
-	               "fecha_fin": ""}}/>
-               <DonutChart call="/api/red_flag_4/distribucion_de_montos_contratados/" id="awardValue"
+	               "fecha_fin": ""}}
+               plotLabel="Distribución de los montos adjudicados por método de adjudicación"/>
+            <DonutChart call="/api/red_flag_4/distribucion_de_montos_contratados/" id="awardValue"
               params={{
   	              "percentage_inicial":"",
   	              "percentage_final":"",
   	              "fecha_inicio": "",
-  	              "fecha_fin": ""}}/>
+  	              "fecha_fin": ""}}
+              plotLabel="Distribución de los montos contratados por método de adjudicación"/>
 
           </Grid>
         </Grid>
@@ -258,7 +267,8 @@ export default function CenteredTabs(props) {
             <FiltersCard />
             {/*<ChartCardFlag5 />*/}
             <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
-            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"/>
+            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"
+              />
             <BarChart call="/api/red_flag_5/get_resumen_integridad_de_datos_enmiendas/"/>
 
           </Grid>

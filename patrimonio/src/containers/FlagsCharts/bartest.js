@@ -103,11 +103,29 @@ class BarGrafica extends Component {
   optionsBar() {
     return {
       cutoutPercentage: 65,
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Número de contratos'
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Estado'
+          }
+        }]
+      },
       legend: {
+        display: false,
         position: "bottom",
         labels: {
           pointStyle: "circle",
-          usePointStyle: true
+          usePointStyle: true,
+          fontSize: 16,
+          padding: 13,
+
         }
       }
     };
@@ -140,7 +158,7 @@ class BarGrafica extends Component {
  labels: this.state.labels,
  datasets: [
    {
-     label: 'My First dataset',
+     //label: 'My First dataset',
      backgroundColor: 'rgba(255,99,132,0.2)',
      borderColor: 'rgba(255,99,132,1)',
      borderWidth: 1,
@@ -155,7 +173,7 @@ console.log(this.data);
       <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
             <Bar
               responsive={true}
               options={this.optionsBar()}

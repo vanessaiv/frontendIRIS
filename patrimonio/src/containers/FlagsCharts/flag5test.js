@@ -147,7 +147,7 @@ class MixedChart extends Component {
       <div className="col-sm-12 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 style={{ color: '#00acc1' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">Procesos de contratación con bandera roja por el número de enmiendas (Número de contratos y Distribución)</h5>
             <Bar data={this.data }
                   options={{
                     scales: {
@@ -169,13 +169,24 @@ class MixedChart extends Component {
                           display: true,
                           scaleLabel: {
                             display: true,
-                            labelString: 'Número de oferentes'
+                            labelString: 'Enmiendas'
                           },
                           gridLines: {
                             display: false
                           }
                         }]
-                    }}}/>
+                    },
+                    legend: {
+                      position: "bottom",
+                      labels: {
+                        pointStyle: "circle",
+                        usePointStyle: true,
+                        fontSize: 16,
+                        padding: 13,
+
+                      }
+                    }
+                  }}/>
           </div>
         </div>
       </div>

@@ -108,7 +108,10 @@ class DonutGrafica extends Component {
         position: "bottom",
         labels: {
           pointStyle: "circle",
-          usePointStyle: true
+          usePointStyle: true,
+          fontSize: 16,
+          padding: 13,
+
         }
       }
     };
@@ -156,7 +159,7 @@ console.log(this.data);
       <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 className="mb-4">Evolución de ingresos de servidores públicos</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
             <Donut
               height={50}
               width={50}

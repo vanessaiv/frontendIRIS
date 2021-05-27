@@ -15,21 +15,15 @@ import InfoCard from '../../components/InfoCard/InfoCard';
 import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
-import ChartCard from '../../components/ChartCard/ChartCard';
-import ChartCardFlag1 from '../FlagsCharts/Flag1/ChartCardFlag1';
-import ChartCardFlag2 from '../FlagsCharts/Flag2/ChartCardFlag2';
-import ChartCardFlag3 from '../FlagsCharts/Flag3/ChartCardFlag3';
-import ChartCardFlag4 from '../FlagsCharts/Flag4/ChartCardFlag4';
-import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
 
-import MixedChart from '../FlagsCharts/flagtest';
-import MixedChart2 from '../FlagsCharts/flag2test';
-import MixedChart3 from '../FlagsCharts/flag3test';
-import MixedChart4 from '../FlagsCharts/flag4test';
-import MixedChart5 from '../FlagsCharts/flag5test';
-import DonutChart from '../FlagsCharts/donuttest';
-import BarChart from '../FlagsCharts/bartest';
-import LineChart from '../FlagsCharts/linetest';
+import MixedChart from '../FlagsCharts/mixedChartFlag1';
+import MixedChart2 from '../FlagsCharts/mixedChartFlag2';
+import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
+import MixedChart4 from '../FlagsCharts/mixedChartFlag4';
+import MixedChart5 from '../FlagsCharts/mixedChartFlag5';
+import DonutChart from '../FlagsCharts/donutChart';
+import BarChart from '../FlagsCharts/barChart';
+import LineChart from '../FlagsCharts/lineChart';
 
 import Slider from '../Slider/Slider';
 

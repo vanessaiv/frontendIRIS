@@ -61,7 +61,7 @@ class BarGrafica extends Component {
     this.state = {
       labels:[],
       datasets:[],
-      datasetsa:[]
+      datasetsa: []
     }
   }
 
@@ -70,21 +70,21 @@ class BarGrafica extends Component {
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
-    var datasets_a = [];
+    var datasets_u = [];
+    var datas = [];
     var label1 = this.props.label1;
     var label2 = this.props.label2;
     API.post(this.props.call,
-      this.props.params
-    )
+      this.props.params)
             .then(response => {
 
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item[label1]);
-                datasets_a.push(item[label2]);
-                console.log(datasets_t);
-                console.log(arreglo_tags);
+                datasets_u.push(item[label2]);
+                datas.push(item);
+                console.log(datas);
               });
               var index = 0;
               while (index < arreglo_tags.length) {
@@ -98,35 +98,51 @@ class BarGrafica extends Component {
               index = 0;
               while (index < datasets_t.length) {
                 this.setState(prevState => ({
-                    datasets: [...prevState.datasets, datasets_t[index]]
+                    datasets: [...prevState.datasets, datasets_t[index]],
+                    datasetsa: [...prevState.datasetsa, datasets_u[index]]
                 }))
-
-                this.setState(prevState => ({
-                    datasetsa: [...prevState.datasetsa, datasets_a[index]]
-                }))
-
-                index++;
+                  index++;
                 }
             }).catch(error => {
                 console.log(error);
             });
   }
 
-  optionsLine() {
+  optionsBar() {
     return {
-      cutoutPercentage: 65,
+      //cutoutPercentage: 65,
+      scales: {
+        yAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Número de contratos'
+          }
+        }],
+        xAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Estado'
+          }
+        }]
+      },
       legend: {
+        display: false,
         position: "bottom",
         labels: {
           pointStyle: "circle",
-          usePointStyle: true
+          usePointStyle: true,
+          fontSize: 16,
+          padding: 13,
+
         }
       }
     };
   }
 
 
-  mergeColorsIntoLineData(srcData) {
+  mergeColorsIntoBarData(srcData) {
     /* This function merges from "global" colors array into pie data colors.
      * Since pie charts use an arr of backgroundColor for each pie segment, we
      * resample from the other color arr indexes and push onto backgroundColor
@@ -147,77 +163,43 @@ class BarGrafica extends Component {
   }
 
   render() {
-    console.log(this.state.datasets);
+    console.log("STACKED!!!");
+    console.log(this.state.datasetsa);
     this.data  = {
-      labels: this.state.labels,
-      datasets: [
+     labels: this.state.labels,
+     datasets: [
        {
-         label: 'Adjudicación',
-         yAxisID: 'A',
-         backgroundColor: '#0d9deb',
-         //borderColor: 'rgba(255,99,132,1)',
+         //label: 'My First dataset',
+         backgroundColor: 'rgba(255,99,132,0.2)',
+         borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
+         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+         hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasets,
-         order: 2,
+         label: 'Adjudicación'
        },
        {
-         label: 'Contratación',
-         yAxisID: 'B',
-         backgroundColor: '#ff962d',
-         //borderColor: 'rgba(230,80,112,1)',
+         //label: 'My First dataset',
+         backgroundColor: 'orange',
+         borderColor: 'orange',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(230,80,112,0.4)',
-         //hoverBorderColor: 'rgba(230,80,112,1)',
+         hoverBackgroundColor: 'orange',
+         hoverBorderColor: 'orange',
          data: this.state.datasetsa,
-         order: 1,
+         label: 'Adjudicación kajndj'
        }
-     ],
-
-  }
-
+     ]
+    }
 console.log(this.data);
     return (
-      <div className="col-sm-6 py-3">
+      <div className="col-sm-12 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
-            <Line
+            <Bar
               responsive={true}
-              data={this.data}
-              options={{
-                scales: {
-                  yAxes: [{
-                    display: true,
-                    id: 'A',
-                    type: 'linear',
-                    position: 'left',
-                    labelString: 'Monto (MDP)'
-                  }, {
-                    display: false,
-                    id: 'B',
-                    type: 'linear',
-                    position: 'right',
-                  }],
-                  xAxes: [{
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Año'
-                    }
-                  }]
-                },
-                legend: {
-                  position: "bottom",
-                  labels: {
-                    pointStyle: "circle",
-                    usePointStyle: true,
-                    fontSize: 16,
-                    padding: 13,
-
-                  }
-                }
-              }}
+              options={this.optionsBar()}
+              data={this.mergeColorsIntoBarData(this.data)}
             />
           </div>
         </div>

@@ -71,18 +71,21 @@ class BarGrafica extends Component {
     var arreglo_tags = [];
     var datasets_t = [];
     var datasets_a = [];
-    var label1 = this.props.label1;
-    var label2 = this.props.label2;
     API.post(this.props.call,
-      this.props.params
+      {
+        "percentage_inicial": "",
+        "percentage_final": "",
+        "fecha_inicio": "",
+        "fecha_fin": ""
+      }
     )
             .then(response => {
 
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
-                datasets_t.push(item[label1]);
-                datasets_a.push(item[label2]);
+                datasets_t.push(item["contractValue"]);
+                datasets_a.push(item["awardValue"]);
                 console.log(datasets_t);
                 console.log(arreglo_tags);
               });
@@ -195,7 +198,7 @@ console.log(this.data);
                     position: 'left',
                     labelString: 'Monto (MDP)'
                   }, {
-                    display: false,
+                    display: true,
                     id: 'B',
                     type: 'linear',
                     position: 'right',

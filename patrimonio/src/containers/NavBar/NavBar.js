@@ -15,14 +15,21 @@ import InfoCard from '../../components/InfoCard/InfoCard';
 import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
+import ChartCard from '../../components/ChartCard/ChartCard';
+import ChartCardFlag1 from '../FlagsCharts/Flag1/ChartCardFlag1';
+import ChartCardFlag2 from '../FlagsCharts/Flag2/ChartCardFlag2';
+import ChartCardFlag3 from '../FlagsCharts/Flag3/ChartCardFlag3';
+import ChartCardFlag4 from '../FlagsCharts/Flag4/ChartCardFlag4';
+import ChartCardFlag5 from '../FlagsCharts/Flag5/ChartCardFlag5';
 
-import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
-
-import DonutChart from '../FlagsCharts/donutChart';
-import BarChart from '../FlagsCharts/barChart';
-import StackedBarChart from '../FlagsCharts/stackedBarChart';
-import LineChart from '../FlagsCharts/lineChart';
-import LineChart2y from '../FlagsCharts/lineChart2yAxis';
+import MixedChart from '../FlagsCharts/flagtest';
+import MixedChart2 from '../FlagsCharts/flag2test';
+import MixedChart3 from '../FlagsCharts/flag3test';
+import MixedChart4 from '../FlagsCharts/flag4test';
+import MixedChart5 from '../FlagsCharts/flag5test';
+import DonutChart from '../FlagsCharts/donuttest';
+import BarChart from '../FlagsCharts/bartest';
+import LineChart from '../FlagsCharts/linetest';
 
 import Slider from '../Slider/Slider';
 
@@ -140,53 +147,12 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag2 />*/}
-            <LineChart call="/api/declaraciones/general/aggregate"
-              label1="totalIncome" label2="totalIncome_avg"
-              params={{
-              	"datos":"total_ingresos_avg_ingresos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              plotLabel="Evolución de ingresos del grupo de servidores públicos escogido vs. la mediana de la población de todos los servidores públicos"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              label1="totalIncome" label2="sueldos_salarios_publicos"
-              params={{
-              	"datos":"sueldos_salarios",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              plotLabel="Evolución de los ingresos, sueldos y salarios"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              label1="totalActives" label2="totalActives_avg"
-              params={{
-              	"datos":"total_activos_avg_activos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              plotLabel="Evolución de activos del grupo de servidores públicos escogidos vs. la mediana de la población de servidores públicos"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              label1="totalPassives" label2="totalPassives_avg"
-              params={{
-              	"datos":"total_pasivos_avg_pasivos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              plotLabel="Evolución de los activos, sueldos y salarios"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              label1="totalPassives" label2="sueldos_salarios_publicos"
-              params={{
-              	"datos":"pasivos_sueldos_salarios",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              plotLabel="Evolución de pasivos del grupo de servidores públicos escogido vs. la mediana de la población de servidores públicos"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              plotLabel="Evolución de los pasivos, sueldos y salarios"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
 
 
           </Grid>
@@ -214,31 +180,9 @@ export default function CenteredTabs(props) {
             <FiltersCard />
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
-              params={{
-              	"datos":"evolucion_ingresos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              label1="sueldos_salarios_otros_empleos"
-              label2="sueldos_salarios_publicos"/>
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
-              params={{
-              	"datos":"evolucion_activos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              label1="bienes_inmuebles"/>
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
-              params={{
-              	"datos":"evolucion_pasivos",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
-              }}
-              label1="deudas"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
 
           </Grid>
         </Grid>
@@ -303,20 +247,15 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag4 />*/}
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Pasivos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Activos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos, activos y pasivos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Sueldos y salarios públicos entre ingresos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos entre pasivos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos más activos entre servidor público"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
           </Grid>
         </Grid>
       </TabPanel>

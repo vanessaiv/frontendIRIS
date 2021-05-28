@@ -16,11 +16,14 @@ import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
 
+import MixedChart from '../FlagsCharts/mixedChartFlag1';
+import MixedChart2 from '../FlagsCharts/mixedChartFlag2';
 import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
-
+import MixedChart4 from '../FlagsCharts/mixedChartFlag4';
+import MixedChart5 from '../FlagsCharts/mixedChartFlag5';
 import DonutChart from '../FlagsCharts/donutChart';
 import BarChart from '../FlagsCharts/barChart';
-import LineChart from '../FlagsCharts/lineChart';
+import LineChart2y from '../FlagsCharts/lineChart2yAxis';
 
 import Slider from '../Slider/Slider';
 
@@ -36,20 +39,13 @@ const useStyles = makeStyles({
   flags: {
     color: '#26c6da',
     fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Arial'
+    fontWeight: 'bold'
   },
   indicator: {
     backgroundColor: '#26c6da'
   },
   text: {
     color: 'white'
-  },
-  boldtext: {
-    color: 'black',
-    fontSize: 17,
-    fontWeight: 'bold',
-    fontFamily: 'Arial'
   },
   dashboard: {
     flexFlow: "wrap",
@@ -74,7 +70,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={4}>
           <Typography component={'span'} variant={'body2'}>{children}</Typography>
         </Box>
       )}
@@ -109,71 +105,65 @@ export default function CenteredTabs(props) {
             }}
           centered
         >
-          <Tab label="General" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(0)} />
-          <Tab label="Composiciones" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(1)} />
-          <Tab label="Lista de servidores públicos" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(2)} />
-          <Tab label="Servidor Público" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(3)} />
+          <Tab label="Bandera 1" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(0)} />
+          <Tab label="Bandera 2" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(1)} />
+          <Tab label="Bandera 3" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(2)} />
+          <Tab label="Bandera 4" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(3)} />
+          <Tab label="Bandera 5" className={classes.flags} icon={<FlagRoundedIcon />} {...a11yProps(4)} />
         </Tabs>
       </Paper>
 
       <TabPanel value={props.value} index={0} className={classes.tabpanel}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos a nivel composición" />
+          <TitleCard title="Exploración de datos a nivel general" />
+          <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
-            info= {<p>En esta sección puedes analizar la evolución patrimonial de los:
-                    <li className={classes.boldtext}>Ingresos</li>
-                    <li className={classes.boldtext}>Activos</li>
-                    <li className={classes.boldtext}>Pasivos</li>
-                    de las declaraciones de un grupo de servidores públicos y compararlas con el total de servidores públicos.
-                  </p>}/>
-          <RedFlagCard
-            info={<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
-
-              <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
-              <li className={classes.boldtext}>Institución: se puede seleccionar cualquier institución de gobierno.</li>
-              <li className={classes.boldtext}>Estado: se puede seleccionar un Estado de la República.</li>
-              De esta manera, es posible analizar las diferencias a nivel de ingresos, activos y/o pasivos en las declaraciones, permitiendo identificar diferencias considerables a nivel conjunto.
+            info= "Un periodo de tiempo insuficiente no permitirá a todos los licitantes interesados preparar y presentar ofertas de calidad. Los licitantes que hayan sido “informados” antes de la apertura pública pueden tener ventaja injusta teniendo más tiempo para preparar las ofertas."/>
+          <InfoCard
+            info={<p>
+              <li>ID del concurso</li>
+              <li>Método de contratación</li>
+              <li>Fecha de inicio del concurso</li>
+              <li>Fecha final del concurso</li>
             </p>}
           />
-          <Grid item sm container xs={6}>
+          <CalculationCard info="Fecha final del concurso - Fecha incial del concurso"/>
+        <Grid item sm container xs={6}>
             <FiltersCard />
-            {/*<ChartCardFlag2 />*/}
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-
+          {/*<ChartCard />*/}
+          {/*<ChartCardFlag1 />*/}
+            <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
+            <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/" id="contractId"
+              plotLabel="Integridad de los datos para el cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"
+              plotLabel="Resumen de la integridad de los datos para el cálculo de la bandera"/>
 
           </Grid>
         </Grid>
       </TabPanel>
       <TabPanel value={props.value} index={1}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos a nivel general"/>
+          <TitleCard title="Exploración de datos a nivel composición"/>
+          <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
-            info= {<p>En esta sección puedes analizar cómo se componen las declaraciones de un grupo de servidores públicos, incluyendo sus:
-                    <li className={classes.boldtext}>Ingresos</li>
-                    <li className={classes.boldtext}>Activos</li>
-                    <li className={classes.boldtext}>Pasivos</li>
-                    y compararlas contra el total de servidores públicos.
-                  </p>}/>
-          <RedFlagCard
-            info={<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
-              <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
-              <li className={classes.boldtext}>Institución: se puede seleccionar cualquier institución de gobierno.</li>
-              <li className={classes.boldtext}>Estado: se puede seleccionar un Estado de la República.</li>
-              De esta manera, es posible analizar las diferencias a nivel de ingresos, activos y/o pasivos en las declaraciones, permitiendo identificar diferencias considerables a nivel conjunto.
+            info="Un mayor número de oferentes por licitación puede indicar que los procesos son más competitivos y confiables, tanto en la forma del proceso (abierta en lugar de cerrada) como en el nivel de competencia dentro de cada proceso."/>
+          <InfoCard
+            info={<p>
+              <li>ID del concurso</li>
+              <li>Método de contratación</li>
+              <li>Información sobre los oferentes</li>
             </p>}
           />
-          <Grid item sm container xs={12}>
+          <CalculationCard info="Obteniendo el promedio del número de licitantes de los procesos de contratación abierta"/>
+          <Grid item sm container xs={6}>
             <FiltersCard />
-          {/*<ChartCard />*/}
-          {/*<ChartCardFlag1 />*/}
-            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
-            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
-            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
+            {/*<ChartCardFlag2 />*/}
+            <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
+            <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"
+              plotLabel="Calidad de los datos para el cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"
+              plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
+
 
           </Grid>
         </Grid>
@@ -181,32 +171,22 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={2}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos al nivel del listado de servidores"/>
+          <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
-            info= {<p>En esta sección puedes consultar un listado con la información de los servidores públicos, incluyendo:
-                    <li className={classes.boldtext}>RFC</li>
-                    <li className={classes.boldtext}>Fecha de última declaración</li>
-                    <li className={classes.boldtext}>Nombre</li>
-                    <li className={classes.boldtext}>Apellidos</li>
-                    <li className={classes.boldtext}>Nivel de Gobierno</li>
-                    <li className={classes.boldtext}>Estado</li>
-                    <li className={classes.boldtext}>Institución</li>
-                    <li className={classes.boldtext}>Ingresos</li>
-                    <li className={classes.boldtext}>Activos</li>
-                    <li className={classes.boldtext}>Pasivos</li>
-                  </p>}/>
-          <RedFlagCard
-            info= {<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
-                    <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
-                    <li className={classes.boldtext}>Institución: se puede seleccionar cualquier institución de gobierno.</li>
-                    <li className={classes.boldtext}>Estado: se puede seleccionar un Estado de la República.</li>
-                    <li className={classes.boldtext}>RFC: Se puede especificar el RFC de algún servidor público en específico.</li>
-                    <li className={classes.boldtext}>Nombre: Se puede especificar el nombre de algún servidor público en específico.</li>
-                    <li className={classes.boldtext}>Apellidos: Se pueden especificar los apellidos de algún servidor público en específico.</li>
-                  </p>}/>
+            info="Un mayor porcentaje total de ofertas adjudicadas a través de procesos competitivos puede indicar una mayor apertura en compra pública. El uso de procedimientos competitivos puede permitir que los licitantes potenciales tengan mayor acceso a los procesos de contratación pública y, por lo tanto, puede resultar en una mayor competencia der mercado."/>
+          <InfoCard
+            info={<p>
+              <li>ID del concurso</li>
+              <li>Método de contratación</li>
+              <li>Valor del concurso</li>
+            </p>}
+          />
+          <CalculationCard info="Número total de procesos de contratación adjudicados por métodos competitivos / número total de procesos de contratación"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag3 />*/}
-            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"/>
+            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"
+              plotLabel="Distribución de contratos por método de adjudicación"/>
             <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
 
           </Grid>
@@ -215,42 +195,80 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={3}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos a nivel de servidor público"/>
+          <PhaseCard phase="Adjudicación/" phas="Contrato" />
           <RedFlagCard
-            info= {<p>En esta sección puedes visualizar el detalle completo de los ingresos, activos y pasivos de algún servidor público, en específico:
-                    <li className={classes.boldtext}>RFC</li>
-                    <li className={classes.boldtext}>Fecha de última declaración</li>
-                    <li className={classes.boldtext}>Nombre</li>
-                    <li className={classes.boldtext}>Apellidos</li>
-                    <li className={classes.boldtext}>Nivel de Gobierno</li>
-                    <li className={classes.boldtext}>Estado</li>
-                    <li className={classes.boldtext}>Institución</li>
-                    <li className={classes.boldtext}>Ingresos</li>
-                    <li className={classes.boldtext}>Activos</li>
-                    <li className={classes.boldtext}>Pasivos</li>
-                    Adicionalmente, es posible visualizar algunas gráficas de razones financieras compuestas por los ingresos, activos y pasivos del servidor público.
-                  </p>}/>
-          <RedFlagCard
-            info= {<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
-                    <li className={classes.boldtext}>RFC: Se puede especificar el RFC de algún servidor público en específico.</li>
-                    <li className={classes.boldtext}>Nombre: Se puede especificar el nombre de algún servidor público en específico.</li>
-                    <li className={classes.boldtext}>Apellidos: Se pueden especificar los apellidos de algún servidor público en específico.</li>
-                  </p>}/>
+            info={<p>
+              Una diferencia significativa entre el precio de adjudicación y el precio final del contrato puede ser señal de:
+                <li>Existencia de acuerdos "a puerta cerrada" entre proveedores y compradores. En algunos casos, el licitante ofrece un precio artificialmente bajo para ganar un contrato y luego aumenta los precios a través de enmiendas del contrato durante su implementación.</li>
+                <li>Mala planificación en los procesos de adjudicación. En algunos casos se subestima el costo del bien y servicio, reportando un monto de adjudicación muy pequeño con respecto al monto final del contrato.</li>
+              </p>}/>
+          <InfoCard
+            info={<p>
+              <li>ID de adjudicación</li>
+              <li>Monto de adjudicación</li>
+              <li>ID del contrato</li>
+              <li>Monto del contrato</li>
+            </p>}
+          />
+          <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag4 />*/}
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"/>
-            <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"/>
+            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"
+              plotLabel="Calidad de los datos para cálculo de la bandera"/>
+            <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"
+              plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
+            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
+              plotLabel="Monto adjudicación (inicial) y contratación (final)"/>
+            <MixedChart4 call="/api/red_flag_4/montos_adjudicacion_contrato/"/>
+            <DonutChart call="/api/red_flag_4/distribucion_de_montos_adjudicados/" id="contractValue"
+              params={{
+	               "percentage_inicial":"",
+	               "percentage_final":"",
+	               "fecha_inicio": "",
+	               "fecha_fin": ""}}
+               plotLabel="Distribución de los montos adjudicados por método de adjudicación"/>
+            <DonutChart call="/api/red_flag_4/distribucion_de_montos_contratados/" id="awardValue"
+              params={{
+  	              "percentage_inicial":"",
+  	              "percentage_final":"",
+  	              "fecha_inicio": "",
+  	              "fecha_fin": ""}}
+              plotLabel="Distribución de los montos contratados por método de adjudicación"/>
+
           </Grid>
         </Grid>
       </TabPanel>
+      <TabPanel value={props.value} index={4}>
+        <Grid container className={classes.dashboard}>
+          <TitleCard title="Exploración de datos a nivel de servidor público"/>
+          <PhaseCard phase="Adjudicación/" phas="Contrato" />
+          <RedFlagCard
+            info={<p>
+              Una diferencia significativa entre el precio de adjudicación y el precio final del contrato puede ser señal de:
+                <li>Existencia de acuerdos "a puerta cerrada" entre proveedores y compradores. En algunos casos, el licitante ofrece un precio artificialmente bajo para ganar un contrato y luego aumenta los precios a través de enmiendas del contrato durante su implementación.</li>
+                <li>Mala planificación en los procesos de adjudicación. En algunos casos se subestima el costo del bien y servicio, reportando un monto de adjudicación muy pequeño con respecto al monto final del contrato.</li>
+              </p>}/>
+          <InfoCard
+            info={<p>
+              <li>ID de adjudicación</li>
+              <li>Monto de adjudicación</li>
+              <li>ID del contrato</li>
+              <li>Monto del contrato</li>
+            </p>}
+          />
+          <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
+          <Grid item sm container xs={6}>
+            <FiltersCard />
+            {/*<ChartCardFlag5 />*/}
+            <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
+            <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"
+              />
+            <BarChart call="/api/red_flag_5/get_resumen_integridad_de_datos_enmiendas/"/>
 
+          </Grid>
+        </Grid>
+      </TabPanel>
 
 
     </div>

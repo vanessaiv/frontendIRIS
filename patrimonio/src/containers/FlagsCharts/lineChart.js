@@ -73,25 +73,24 @@ class BarGrafica extends Component {
     var datasets_a = [];
     var label1 = this.props.label1;
     var label2 = this.props.label2;
+
     API.post(this.props.call,
       this.props.params
     )
             .then(response => {
 
-
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item[label1]);
                 datasets_a.push(item[label2]);
-                console.log(datasets_t);
-                console.log(arreglo_tags);
+
               });
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                  console.log(this.state);
+
                   index++;
                 }
 
@@ -147,12 +146,12 @@ class BarGrafica extends Component {
   }
 
   render() {
-    console.log(this.state.datasets);
+
     this.data  = {
       labels: this.state.labels,
       datasets: [
        {
-         label: 'Adjudicación',
+         label: this.props.data1Label,
          yAxisID: 'A',
          backgroundColor: '#0d9deb',
          //borderColor: 'rgba(255,99,132,1)',
@@ -163,7 +162,7 @@ class BarGrafica extends Component {
          order: 2,
        },
        {
-         label: 'Contratación',
+         label: this.props.data2Label,
          yAxisID: 'B',
          backgroundColor: '#ff962d',
          //borderColor: 'rgba(230,80,112,1)',
@@ -177,7 +176,6 @@ class BarGrafica extends Component {
 
   }
 
-console.log(this.data);
     return (
       <div className="col-sm-6 py-3">
         <div className="card shadow">
@@ -212,9 +210,8 @@ console.log(this.data);
                   labels: {
                     pointStyle: "circle",
                     usePointStyle: true,
-                    fontSize: 16,
+                    fontSize: 15,
                     padding: 13,
-
                   }
                 }
               }}

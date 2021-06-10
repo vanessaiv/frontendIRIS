@@ -20,9 +20,14 @@ import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
 
 import DonutChart from '../FlagsCharts/donutChart';
 import BarChart from '../FlagsCharts/barChart';
-import StackedBarChart from '../FlagsCharts/stackedBarChart';
+import StackedBarChart1 from '../FlagsCharts/stackedBarChart1';
+import StackedBarChart2 from '../FlagsCharts/stackedBarChart2';
+import StackedBarChart3 from '../FlagsCharts/stackedBarChart3';
 import LineChart from '../FlagsCharts/lineChart';
 import LineChart2y from '../FlagsCharts/lineChart2yAxis';
+import SingleLineChart from '../FlagsCharts/singleLineChart';
+import TripleLineChart from '../FlagsCharts/tripleLineChart';
+import TripleLineChart2y from '../FlagsCharts/tripleLineChart2yAxis';
 
 import Slider from '../Slider/Slider';
 
@@ -99,6 +104,17 @@ function a11yProps(index) {
 
 export default function CenteredTabs(props) {
   const classes = useStyles();
+  var flag2Labels = [
+    "sueldos_salarios_otros_empleos",
+    "sueldos_salarios_publicos",
+    "actividad_economica_menor",
+    "actividad_empresarial",
+    "actividad_profesional",
+    "arrendamiento",
+    "intereses",
+    "premios",
+    "enajenacion_bienes",
+    "otros_ingresos"];
 
   return (
     <div>
@@ -148,7 +164,8 @@ export default function CenteredTabs(props) {
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              plotLabel="Evolución de ingresos del grupo de servidores públicos escogido vs. la mediana de la población de todos los servidores públicos"/>
+              plotLabel="Evolución de ingresos del grupo de servidores públicos escogido vs. la mediana de la población de todos los servidores públicos"
+              data1Label="Monto de los ingresos (MDP)" data2Label="Promedio global: Monto de los ingresos (MDP)"/>
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalIncome" label2="sueldos_salarios_publicos"
               params={{
@@ -157,7 +174,8 @@ export default function CenteredTabs(props) {
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              plotLabel="Evolución de los ingresos, sueldos y salarios"/>
+              plotLabel="Evolución de los ingresos, sueldos y salarios"
+              data1Label="Monto (MDP)" data2Label="Sueldos y salarios públicos"/>
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalActives" label2="totalActives_avg"
               params={{
@@ -166,7 +184,18 @@ export default function CenteredTabs(props) {
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              plotLabel="Evolución de activos del grupo de servidores públicos escogidos vs. la mediana de la población de servidores públicos"/>
+              plotLabel="Evolución de activos del grupo de servidores públicos escogidos vs. la mediana de la población de servidores públicos"
+              data1Label="Monto de los activos (MDP)" data2Label="Promedio global: Monto de los activos (MDP)"/>
+            <LineChart call="/api/declaraciones/general/aggregate"
+              label1="totalActives" label2="sueldos_salarios_publicos"
+              params={{
+              	"datos":"activos_sueldos_salarios",
+              	"institucion":"",
+              	"estado":"",
+              	"nivel_gobierno":""
+              }}
+              plotLabel="Evolución de los activos, sueldos y salarios"
+              data1Label="Activos" data2Label="Sueldos y salarios públicos"/>
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalPassives" label2="totalPassives_avg"
               params={{
@@ -175,18 +204,18 @@ export default function CenteredTabs(props) {
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              plotLabel="Evolución de los activos, sueldos y salarios"/>
+              plotLabel="Evolución de pasivos del grupo de servidores públicos escogido vs. la mediana de la población de servidores públicos"
+              data1Label="Pasivos" data2Label="Promedio global: Pasivos"/>
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalPassives" label2="sueldos_salarios_publicos"
               params={{
-              	"datos":"pasivos_sueldos_salarios",
-              	"institucion":"",
-              	"estado":"",
-              	"nivel_gobierno":""
+                "datos":"pasivos_sueldos_salarios",
+                "institucion":"",
+                "estado":"",
+                "nivel_gobierno":""
               }}
-              plotLabel="Evolución de pasivos del grupo de servidores públicos escogido vs. la mediana de la población de servidores públicos"/>
-            <LineChart call="/api/declaraciones/general/aggregate"
-              plotLabel="Evolución de los pasivos, sueldos y salarios"/>
+              plotLabel="Evolución de los pasivos, sueldos y salarios"
+              data1Label="Pasivos" data2Label="Sueldos y salarios públicos"/>
 
 
           </Grid>
@@ -214,31 +243,34 @@ export default function CenteredTabs(props) {
             <FiltersCard />
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
+            <StackedBarChart1 call="/api/declaraciones/composiciones/queries"
               params={{
               	"datos":"evolucion_ingresos",
               	"institucion":"",
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              label1="sueldos_salarios_otros_empleos"
-              label2="sueldos_salarios_publicos"/>
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
+              plotLabel= "Evolución de los ingresos"
+              labels = {flag2Labels}/>
+            <StackedBarChart2 call="/api/declaraciones/composiciones/queries"
               params={{
               	"datos":"evolucion_activos",
               	"institucion":"",
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              label1="bienes_inmuebles"/>
-            <StackedBarChart call="/api/declaraciones/composiciones/queries"
+              plotLabel= "Evolución de los activos"
+              labels = {flag2Labels}/>
+            <StackedBarChart3 call="/api/declaraciones/composiciones/queries"
               params={{
               	"datos":"evolucion_pasivos",
               	"institucion":"",
               	"estado":"",
               	"nivel_gobierno":""
               }}
-              label1="deudas"/>
+              plotLabel= "Evolución de los pasivos"
+              labels = {flag2Labels}/>
+
 
           </Grid>
         </Grid>
@@ -303,20 +335,76 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersCard />
             {/*<ChartCardFlag4 />*/}
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Pasivos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Activos del servidor público"/>
-            <LineChart call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos, activos y pasivos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Sueldos y salarios públicos entre ingresos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos entre pasivos del servidor público"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Ingresos más activos entre servidor público"/>
+            <SingleLineChart call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "ingresos_servidor_publico",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1 ="totalIncome"
+              plotLabel="Ingresos del servidor público"
+              data1Label="Monto de los ingresos (MDP)"/>
+            <SingleLineChart call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "activos_servidor_publico",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1 ="totalActives"
+              plotLabel="Pasivos del servidor público"
+              data1Label="Monto de los pasivos (MDP)"/>
+            <SingleLineChart call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "pasivos_servidor_publico",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1 ="totalPassives"
+              plotLabel="Activos del servidor público"
+              data1Label="Monto de los activos (MDP)"/>
+            <TripleLineChart call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "ingresos_activos_entre_pasivos",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1 ="totalIncome" label2="totalPassives" label3="totalActives"
+              plotLabel="Ingresos, activos y pasivos del servidor público"
+              data1Label="Ingresos" data2Label="Pasivos" data3Label="Activos"/>
+            <LineChart2y call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "sueldos_entre_ingresos",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1="totalIncome" label2="sueldos_salarios_publicos"
+              plotLabel="Sueldos y salarios públicos entre ingresos del servidor público"
+              data1Label="Ingresos" data2Label="Sueldos salarios públicos"/>
+            <LineChart2y call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "ingresos_entre_pasivos",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1="totalIncome" label2="totalPassives"
+              plotLabel="Ingresos entre pasivos del servidor público"
+              data1Label="Ingresos" data2Label="Pasivos"/>
+            <TripleLineChart2y call="/api/declaraciones/servidor_publico/queries"
+              params = {{
+                "datos": "ingresos_activos_pasivos",
+                "nombres": "",
+                "rfc": "",
+                "apellidos": ""
+              }}
+              label1="totalIncome" label2="totalActives" label3="totalPassives"
+              plotLabel="Ingresos más activos entre servidor público"
+              data1Label="Ingresos" data2Label="Activos" data3Label="Pasivos"/>
           </Grid>
         </Grid>
       </TabPanel>

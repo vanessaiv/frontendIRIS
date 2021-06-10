@@ -219,7 +219,15 @@ export default function CenteredTabs(props) {
             <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"
               plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
             <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              plotLabel="Monto adjudicación (inicial) y contratación (final)"/>
+              params = {{
+                "percentage_inicial": "",
+                "percentage_final": "",
+                "fecha_inicio": "",
+                "fecha_fin": ""
+              }}
+              label1="contractValue" label2="awardValue"
+              plotLabel="Monto adjudicación (inicial) y contratación (final)"
+              data1Label="Adjudicación" data2Label="Contratación"/>
             <MixedChart4 call="/api/red_flag_4/montos_adjudicacion_contrato/"/>
             <DonutChart call="/api/red_flag_4/distribucion_de_montos_adjudicados/" id="contractValue"
               params={{

@@ -52,7 +52,7 @@ const colors = [
     }
   ];
 
-class DonutGrafica extends Component {
+class BarGrafica extends Component {
 
   constructor(props) {
     super(props)
@@ -60,49 +60,88 @@ class DonutGrafica extends Component {
     this.newCounter = [1];
     this.state = {
       labels:[],
-      datasets:[]
+      datasets:[],
+      datasetsa: [],
+      dataset: [],
+      fdataset: [],
+      datasets1: [],
+      datasets2: [],
+      datasets3: [],
+      datasets4: [],
+      datasets5: [],
+      datasets6: [],
+      datasets7: [],
+      datasets8: [],
+      datasets9: [],
+      datasets10: [],
+
     }
   }
 
 
+
   componentWillMount() {
     var arreglo_tags = [];
-    var datasets_t = [];
-    var id = this.props.id;
-    API.post(this.props.call, this.props.params)
+    var dataset1 = [];
+    var dataset2 = [];
+    var dataLabels = [
+      "deudas",
+      "otras_obligaciones"];
+
+    API.post(this.props.call,
+      this.props.params)
             .then(response => {
 
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
-                datasets_t.push(item[id]);
-
+                dataset1.push(item[dataLabels[0]]);
+                dataset2.push(item[dataLabels[1]]);
               });
+
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-
                   index++;
                 }
 
               index = 0;
-              while (index < datasets_t.length) {
+              while (index < dataset1.length) {
                 this.setState(prevState => ({
-                    datasets: [...prevState.datasets, datasets_t[index]]
+                    datasets1: [...prevState.datasets1, dataset1[index]],
+                    datasets2: [...prevState.datasets2, dataset2[index]],
                 }))
                   index++;
                 }
+
             }).catch(error => {
                 console.log(error);
             });
   }
 
-  optionsDonut() {
+  optionsBar() {
     return {
-      cutoutPercentage: 65,
+      //cutoutPercentage: 65,
+      scales: {
+        yAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Monto de los pasivos (MDP)'
+          }
+        }],
+        xAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Año'
+          }
+        }]
+      },
       legend: {
+        display: false,
         position: "bottom",
         labels: {
           pointStyle: "circle",
@@ -115,54 +154,40 @@ class DonutGrafica extends Component {
     };
   }
 
-
-  mergeColorsIntoPieData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
-    return {
-      ...srcData,
-      datasets: srcData.datasets.map((dataset, k) => {
-        colors[k].backgroundColor = [colors[k].backgroundColor.toString()];
-        colors[k].backgroundColor.push(
-          colors[k + 1].backgroundColor.toString()
-        );
-        colors[k].backgroundColor.push(
-          colors[k + 2].backgroundColor.toString()
-        );
-        return { ...dataset, ...colors[k] };
-      })
-    };
-  }
-
   render() {
     this.data  = {
- labels: this.state.labels,
- datasets: [
-   {
-     label: 'My First dataset',
-     backgroundColor: 'rgba(255,99,132,0.2)',
-     borderColor: 'rgba(255,99,132,1)',
-     borderWidth: 1,
-     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-     hoverBorderColor: 'rgba(255,99,132,1)',
-     data: this.state.datasets,
-   }
- ]
-}
+     labels: this.state.labels,
+     datasets: [
+       {
+         backgroundColor: '#31c6e8',
+         borderColor: '#31c6e8',
+         borderWidth: 1,
+         hoverBackgroundColor: '#39dbff',
+         hoverBorderColor: '#39dbff',
+         data: this.state.datasets1,
+         label: 'Bienes inmuebles'
+       },
+       {
+         backgroundColor: '#ffd60b',
+         borderColor: '#ffd60b',
+         borderWidth: 1,
+         hoverBackgroundColor: '#ffdd00',
+         hoverBorderColor: '#ffdd00',
+         data: this.state.datasets2,
+         label: 'Bienes muebles no registrables'
+       }
+     ]
+    }
 
     return (
-      <div className="col-sm-6 py-3">
+      <div className="col-sm-12 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
-            <Donut
-              height={50}
-              width={50}
+            <Bar
               responsive={true}
-              options={this.optionsDonut()}
-              data={this.mergeColorsIntoPieData(this.data)}
+              options={this.optionsBar()}
+              data={this.data}
             />
           </div>
         </div>
@@ -174,4 +199,4 @@ class DonutGrafica extends Component {
 }
 
 
-export default DonutGrafica;
+export default BarGrafica;

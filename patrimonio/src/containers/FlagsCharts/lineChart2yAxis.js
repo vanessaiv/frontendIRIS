@@ -83,15 +83,14 @@ class BarGrafica extends Component {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item[label1]);
                 datasets_a.push(item[label2]);
-                console.log(datasets_t);
-                console.log(arreglo_tags);
+                
               });
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                  console.log(this.state);
+
                   index++;
                 }
 
@@ -147,7 +146,6 @@ class BarGrafica extends Component {
   }
 
   render() {
-    console.log(this.state.datasets);
     this.data  = {
       labels: this.state.labels,
       datasets: [

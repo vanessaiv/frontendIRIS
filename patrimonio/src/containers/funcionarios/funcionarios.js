@@ -29,7 +29,10 @@ import SingleLineChart from '../FlagsCharts/singleLineChart';
 import TripleLineChart from '../FlagsCharts/tripleLineChart';
 import TripleLineChart2y from '../FlagsCharts/tripleLineChart2yAxis';
 
+import Table from '../FlagsCharts/table';
+
 import Slider from '../Slider/Slider';
+import Dropdown from '../Filters/dropdown';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -154,8 +157,11 @@ export default function CenteredTabs(props) {
             </p>}
           />
           <Grid item sm container xs={6}>
-            <FiltersCard />
+            {/*<FiltersCard />*/}
             {/*<ChartCardFlag2 />*/}
+            <Dropdown />
+            <Dropdown />
+            <Dropdown />
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalIncome" label2="totalIncome_avg"
               params={{
@@ -305,6 +311,7 @@ export default function CenteredTabs(props) {
             {/*<ChartCardFlag3 />*/}
             <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"/>
             <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
+            <Table />
 
           </Grid>
         </Grid>

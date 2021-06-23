@@ -75,6 +75,7 @@ export default function ComplexGrid(props) {
           <Grid item xs={12} spacing={3}>
             <Slider />
           </Grid>
+
         </Grid>
       </Paper>
     </div>

@@ -15,6 +15,7 @@ import InfoCard from '../../components/InfoCard/InfoCard';
 import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
+import SliderCard from '../../components/SliderCard/SliderCard';
 
 import MixedChart from '../FlagsCharts/mixedChartFlag1';
 import MixedChart2 from '../FlagsCharts/mixedChartFlag2';
@@ -130,6 +131,8 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Fecha final del concurso - Fecha incial del concurso"/>
         <Grid item sm container xs={6}>
             <FiltersCard />
+            <Slider call="/api/red_flag_1/get_maximo_minimo/"
+              text="Selecciona el rango de días que estuvo abierto el proceso de contratación:"/>
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
             <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
@@ -157,6 +160,8 @@ export default function CenteredTabs(props) {
           <CalculationCard info="Obteniendo el promedio del número de licitantes de los procesos de contratación abierta"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <Slider call="/api/red_flag_2/get_maximo_minimo_oferentes"
+              text="Selecciona el número de oferentes de los procesos de contratación abiertos:"/>
             {/*<ChartCardFlag2 />*/}
             <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
             <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"
@@ -213,6 +218,12 @@ export default function CenteredTabs(props) {
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <Slider call="/api/red_flag_4/get_maximo_minimo_aumento_porcentual/"
+              params={{
+              	"fecha_inicio": "2015-12-29",
+              	"fecha_fin": "2017-10-10"
+              }}
+              text="Selecciona el aumento porcentual:"/>
             {/*<ChartCardFlag4 />*/}
             <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"
               plotLabel="Calidad de los datos para cálculo de la bandera"/>
@@ -268,6 +279,8 @@ export default function CenteredTabs(props) {
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
             <FiltersCard />
+            <Slider call="/api/red_flag_5/get_maximo_minimo_enmiendas"
+              text="Selecciona el número de enmiendas:"/>
             {/*<ChartCardFlag5 />*/}
             <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
             <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"

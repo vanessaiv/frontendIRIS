@@ -159,9 +159,17 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             {/*<FiltersCard />*/}
             {/*<ChartCardFlag2 />*/}
-            <Dropdown />
-            <Dropdown />
-            <Dropdown />
+            <Dropdown call="/api/declaraciones/catalogos/niveles_de_gobierno" inputLabel='Nivel de gobierno' defaultLabel='Seleccionar Nivel de Gobierno'/>
+            <Dropdown call="/api/declaraciones/catalogos/entidades_federativas" inputLabel='Entidad Federativa'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Entidad Federativa'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_institucion" inputLabel='Institución'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Institución'/>
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalIncome" label2="totalIncome_avg"
               params={{
@@ -246,7 +254,17 @@ export default function CenteredTabs(props) {
             </p>}
           />
           <Grid item sm container xs={12}>
-            <FiltersCard />
+            <Dropdown call="/api/declaraciones/catalogos/niveles_de_gobierno" inputLabel='Nivel de gobierno' defaultLabel='Seleccionar Nivel de Gobierno'/>
+            <Dropdown call="/api/declaraciones/catalogos/entidades_federativas" inputLabel='Entidad Federativa'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Entidad Federativa'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_institucion" inputLabel='Institución'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Institución'/>
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
             <StackedBarChart1 call="/api/declaraciones/composiciones/queries"
@@ -307,7 +325,34 @@ export default function CenteredTabs(props) {
                     <li className={classes.boldtext}>Apellidos: Se pueden especificar los apellidos de algún servidor público en específico.</li>
                   </p>}/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
+            <Dropdown call="/api/declaraciones/catalogos/niveles_de_gobierno" inputLabel='Nivel de gobierno' defaultLabel='Seleccionar Nivel de Gobierno'/>
+            <Dropdown call="/api/declaraciones/catalogos/entidades_federativas" inputLabel='Entidad Federativa'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Entidad Federativa'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_institucion" inputLabel='Institución'
+              params={{"state": "",
+                "governmentLevel": "",
+                "expresion": ""}}
+              defaultLabel='Seleccionar Institución'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_autocompletar" inputLabel='RFC'
+              defaultLabel='Seleccionar RFC' params={{
+                "criterio": "rfc",
+                "expresion": "UA"
+              }}/>
+            <Dropdown call="/api/declaraciones/catalogos/get_first_name_funcionario" inputLabel='Nombre'
+              params={{
+                "criterio": "firstName",
+                "expresion": "Ama"
+              }}
+              defaultLabel='Seleccionar Nombre'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_last_name_funcionario" inputLabel='Apellidos'
+              params={{
+                "criterio": "lastName",
+                "expresion": "Se"
+              }}
+              defaultLabel='Seleccionar Apellido'/>
             {/*<ChartCardFlag3 />*/}
             <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"/>
             <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
@@ -340,7 +385,23 @@ export default function CenteredTabs(props) {
                     <li className={classes.boldtext}>Apellidos: Se pueden especificar los apellidos de algún servidor público en específico.</li>
                   </p>}/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
+            <Dropdown call="/api/declaraciones/catalogos/get_autocompletar" inputLabel='RFC'
+              defaultLabel='Seleccionar RFC' params={{
+                "criterio": "rfc",
+                "expresion": "A"
+              }}/>
+            <Dropdown call="/api/declaraciones/catalogos/get_autocompletar" inputLabel='Nombre'
+              params={{
+                "criterio": "firstName",
+                "expresion": "a"
+              }}
+              defaultLabel='Seleccionar Nombre'/>
+            <Dropdown call="/api/declaraciones/catalogos/get_autocompletar" inputLabel='Apellidos'
+              params={{
+                "criterio": "lastName",
+                "expresion": "e"
+              }}
+              defaultLabel='Seleccionar Apellido'/>
             {/*<ChartCardFlag4 />*/}
             <SingleLineChart call="/api/declaraciones/servidor_publico/queries"
               params = {{

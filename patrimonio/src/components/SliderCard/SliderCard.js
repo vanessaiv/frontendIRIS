@@ -49,25 +49,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ComplexGrid(props) {
   const classes = useStyles();
-
+  const {callProp} = this.props;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={4} direction='column' justifyContent="space-evenly" alignItems="center" justify="center">
-          <Grid item container spacing={2} justify="center" alignItems="center">
-            <FilterTiltShiftIcon style={{ fontSize: 30 }}/>
-            <Typography className={classes.subtitle} color="textSecondary">
-              FILTROS
-            </Typography>
+          <Grid item xs={12} spacing={3}>
+            <Typography className={classes.body} color="textSecondary">Selecciona el rango de días que estuvo abierto el proceso de contratación:</Typography>
           </Grid>
           <Grid item xs={12} spacing={3}>
-            <Typography className={classes.body} color="textSecondary">Selecciona la fecha de inicio y final del periodo de contrataciones a analizar:</Typography>
-          </Grid>
-          <Grid item xs={12} spacing={3}>
-            <DatePicker />
-          </Grid>
-          <Grid item xs={12} spacing={3}>
-            <DatePicker />
+            <Slider call={callProp}/>
           </Grid>
 
         </Grid>

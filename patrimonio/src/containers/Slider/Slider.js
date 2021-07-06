@@ -1,130 +1,134 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import Tooltip from '@material-ui/core/Tooltip';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import API from '../../Utils/Api';
 
-const useStyles = makeStyles((theme) => ({
+
+const styles = theme => ({
   root: {
-    width: 300 + theme.spacing(3) * 2,
+    width: 800,
   },
-  margin: {
-    height: theme.spacing(3),
+  paper: {
+    padding: theme.spacing(5),
+    display: 'inline-flex',
+    //minWidth: '75vh',
+    width: "148vh",
+    maxHeight: "90vh",
+    position: 'relative',
+    flexGrow: 1,
+    flex: "auto",
+    alignItems: "center",
+    margin: theme.spacing(2,2),
   },
-}));
+  body: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 25,
+    color: '#ff3d00',
+    fontWeight: "bold",
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#00acc1',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  text: {
+    fontWeight: "bold"
+  }
+});
 
-function ValueLabelComponent(props) {
-  const { children, open, value } = props;
-
-  return (
-    <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
-      {children}
-    </Tooltip>
-  );
+function valuetext(value) {
+  return `${value}`;
 }
 
-ValueLabelComponent.propTypes = {
-  children: PropTypes.element.isRequired,
-  open: PropTypes.bool.isRequired,
-  value: PropTypes.number.isRequired,
+function sliderLabels(val) {
+  var marksLabels = [];
+  for (var i = 0; i <= val; i+=Math.floor(val/10)) {
+    let c = {value: i, label: i.toString()};
+    marksLabels.push(c);
+  }
+  console.log(marksLabels);
+  return marksLabels
 };
 
-const marks = [
-  {
-    value: 0,
-  },
-  {
-    value: 20,
-  },
-  {
-    value: 40,
-  },
-  {
-    value: 60,
-  },
-  {
-    value: 80,
-  },
-  {
-    value: 100,
-  },
-];
 
-const AirbnbSlider = withStyles({
-  root: {
-    color: '#3a8589',
-    height: 8,
-    padding: '10px 100px',
-  },
-  thumb: {
-    height: 27,
-    width: 27,
-    backgroundColor: '#fff',
-    border: '1px solid currentColor',
-    marginTop: -12,
-    marginLeft: -103,
-    '&:focus, &:hover, &$active': {
-      boxShadow: '#ccc 0 2px 3px 1px',
-    },
-    '& .bar': {
-      // display: inline-block !important;
-      height: 9,
-      width: 2,
-      backgroundColor: 'currentColor',
-      marginLeft: 1,
-      marginRight: 1,
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: 'calc(-50% + 4px)',
-  },
-  track: {
-    height: 5,
-    marginLeft: -103,
-  },
-  rail: {
-    color: '#d8d8d8',
-    opacity: 1,
-    height: 5,
-    marginLeft: -200,
-  },
-  mark: {
-    backgroundColor: '#bfbfbf',
-    height: 8,
-    width: 3,
-    marginTop: -3,
-    marginLeft: -103,
-  },
-  markActive: {
-    opacity: 1,
-    backgroundColor: 'currentColor',
-  },
-})(Slider);
+class RangeSlider extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: [20, 100],
+      values: []
+    }
+  }
 
-function AirbnbThumbComponent(props) {
-  return (
-    <span {...props}>
-      <span className="bar" />
-      <span className="bar" />
-      <span className="bar" />
-    </span>
-  );
+  componentDidMount() {
+    var max = 0;
+    var min = 0;
+
+    API.post(this.props.call, this.props.params)
+            .then(response => {
+              response.data.forEach(function(item) {
+                max = item["max"];
+                min = item["min"];
+              });
+              let data = [max, min];
+              console.log(min);
+
+              var index = 0;
+              while (index < data.length) {
+                this.setState(prevState => ({
+                  values: [...prevState.values, data[index]]
+                }))
+                index++;
+              }
+              console.log(this.state.values);
+
+            }).catch(error => {
+                console.log(error);
+            });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const handleChange = (event, newValue) => {
+      this.setState({ value: newValue })
+    };
+    return(
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+
+          <Grid item xs={12} spacing={3}>
+            <Typography className={classes.body} color="textSecondary">{this.props.text}</Typography>
+          </Grid>
+
+
+          <Slider
+            max={this.state.values[0]}
+            value={this.state.value}
+            onChange={handleChange}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
+            getAriaValueText={valuetext}
+            marks={sliderLabels(this.state.values[0])}
+          />
+
+
+        </Paper>
+      </div>
+    );
+  }
 }
 
-export default function CustomizedSlider() {
-  const classes = useStyles();
+RangeSlider.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-  return (
-    <div className={classes.root}>
-      <AirbnbSlider
-        ThumbComponent={AirbnbThumbComponent}
-        getAriaLabel={(index) => (index === 0 ? 'Minimum price' : 'Maximum price')}
-        defaultValue={[20, 40]}
-        valueLabelDisplay="auto"
-        ValueLabelComponent={ValueLabelComponent}
-        marks={marks}
-      />
-    </div>
-  );
-}
+export default withStyles(styles)(RangeSlider);

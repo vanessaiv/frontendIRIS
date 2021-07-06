@@ -30,31 +30,69 @@ const styles = theme => ({
 class Dropdown extends Component{
   constructor(props) {
     super(props)
+    this.data={}
+    this.newCounter = [1];
     this.state = {
-      age: ''
+      item: '',
+      data:{},
+      labels:[],
+      datasets:[],
+      lista:[],
+      selectedE: 1,
     }
   }
+
+  componentDidMount() {
+    var data = [];
+
+    API.post(this.props.call,
+        this.props.params)
+            .then(response => {
+              response.data.forEach(function(item) {
+                data.push(item);
+
+              });
+
+              var index = 0;
+              while (index < data.length) {
+                this.setState(prevState => ({
+                  lista: [...prevState.lista, data[index]]
+                }))
+                index++;
+              }
+
+            }).catch(error => {
+                console.log(error);
+            });
+  }
+
 
   render(){
     const { classes } = this.props;
     const handleChange = (event) => {
-      this.setState({age: event.target.value})
+      this.setState({item: event.target.value})
     };
 
     return(
       <div className={classes.root}>
         <Paper >
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Nivel de gobierno</InputLabel>
+            <InputLabel id="demo-simple-select-label" shrink={true}>{this.props.inputLabel}</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={this.state.age}
+              value={this.state.item}
               onChange={handleChange}
+              displayEmpty
             >
-              <MenuItem value={10}>Selecciona el nivel de gobierno</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="">{this.props.defaultLabel}</MenuItem>
+            {this.state.lista.map((ng, i) =>
+              <MenuItem
+                value={ng}
+                key={i}>
+                {ng}
+              </MenuItem>
+            )}
             </Select>
           </FormControl>
         </Paper>

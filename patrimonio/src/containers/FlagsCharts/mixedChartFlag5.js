@@ -109,8 +109,7 @@ class MixedChart extends Component {
                   }))
                     index++;
                   }
-                  console.log(this.state.datasets);
-                  console.log(this.state.amounts);
+
             }).catch(error => {
                 console.log(error);
             });

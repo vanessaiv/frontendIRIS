@@ -51,7 +51,7 @@ export default function ComplexGrid(props) {
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            <Typography component={'span'} variant={'body2'} className={classes.body} color="textSecondary">
+            <Typography component={'span'} variant={'body2'} className={classes.body} >
               {props.info}
             </Typography>
           </Grid>

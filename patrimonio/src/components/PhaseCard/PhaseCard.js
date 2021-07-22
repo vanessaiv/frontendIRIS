@@ -11,7 +11,7 @@ const styles = makeStyles((theme) => ({
     display: 'inline-flex',
   },
   card: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     display: 'inline-flex',
     minHeight: "12vh",
     position: 'relative',
@@ -20,7 +20,7 @@ const styles = makeStyles((theme) => ({
     margin: theme.spacing(2,2),
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#00acc1',
     fontWeight: "bold"
   },

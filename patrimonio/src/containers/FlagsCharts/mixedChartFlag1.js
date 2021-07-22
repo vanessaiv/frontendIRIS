@@ -1,13 +1,19 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import API from '../../Utils/Api';
 import {
   defaults,
   Line,
   Bar,
 } from "react-chartjs-2";
+import { handleChange } from './selectExample';
 
 const rand = () => Math.round(Math.random() * 20 - 10);
-
+var arreglo_tags = [];
+var datasets_t = [];
+var amounts = []; //revisar
+var valor_acumulado = 0;
+var total = 0;
+var acumulado = 0;
 
 const colors = [
     {
@@ -54,6 +60,7 @@ class MixedChart extends Component {
 
   constructor(props) {
     super(props)
+    this.handleChange = handleChange.bind(this);
     this.data={}
     this.newCounter = [1];
     this.state = {
@@ -67,15 +74,9 @@ class MixedChart extends Component {
 
 
   componentWillMount() {
-    var arreglo_tags = [];
-    var datasets_t = [];
-    var amounts = []; //revisar
-    var valor_acumulado = 0;
-    var total = 0;
-    var acumulado = 0;
     API.post(this.props.call,
       {
-        "numero_contratos":"100",
+        "numero_contratos":"200",
         "fecha_inicio": "2016-12-08",
         "fecha_fin": "2018-11-01"
 
@@ -109,14 +110,11 @@ class MixedChart extends Component {
                   }))
                     index++;
                   }
-                  console.log(this.state.datasets);
-                  console.log(total);
-                  console.log(this.state.acumulados);
+
             }).catch(error => {
                 console.log(error);
             });
   }
-
 
 
 
@@ -142,15 +140,22 @@ class MixedChart extends Component {
             yAxisID: 'B'
      }],
      labels: this.state.labels,
+   }
 
-
-}
     return (
       <div className="col-sm-12 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
+            <select value={this.state.value} onChange={this.handleChange}>
+              <option value="grapefruit">Grapefruit</option>
+              <option value="10">100</option>
+              <option value="20">200</option>
+              <option value="30">300</option>
+              <option value="40">400</option>
+              <option value="50">500</option>
+            </select>
             <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">Evolución de ingresos de servidores públicos</h5>
-            <Bar data={this.data }
+            <Bar data={ this.data }
                   options={{
                     scales: {
                       yAxes: [{

@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TitleCard from '../../components/TitleCard/TitleCard';
+import FiltersTitleCard from '../../components/FiltersTitleCard/FiltersTitleCard';
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -27,6 +28,11 @@ import BarChart from '../FlagsCharts/barChart';
 import LineChart2y from '../FlagsCharts/lineChart2yAxis';
 
 import Slider from '../Slider/Slider';
+import Bandera1 from './bandera1';
+import Bandera2 from './bandera2';
+import Bandera3 from './bandera3';
+import Bandera4 from './bandera4';
+import Bandera5 from './bandera5';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -130,12 +136,11 @@ export default function CenteredTabs(props) {
           />
           <CalculationCard info="Fecha final del concurso - Fecha incial del concurso"/>
         <Grid item sm container xs={6}>
-            <FiltersCard />
-            <Slider call="/api/red_flag_1/get_maximo_minimo/"
+            <FiltersTitleCard />
+            <Bandera1 callS="/api/red_flag_1/get_maximo_minimo/" callB="api/red_flag_1/get_numero_contratos/"
               text="Selecciona el rango de días que estuvo abierto el proceso de contratación:"/>
           {/*<ChartCard />*/}
           {/*<ChartCardFlag1 />*/}
-            <MixedChart call="api/red_flag_1/get_numero_contratos/"/>
             <DonutChart call="/api/red_flag_1/get_integridad_de_datos_flag1/" id="contractId"
               plotLabel="Integridad de los datos para el cálculo de la bandera"/>
             <BarChart call="/api/red_flag_1/get_resumen_integridad_de_datos_flag1/"
@@ -159,11 +164,10 @@ export default function CenteredTabs(props) {
           />
           <CalculationCard info="Obteniendo el promedio del número de licitantes de los procesos de contratación abierta"/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
-            <Slider call="/api/red_flag_2/get_maximo_minimo_oferentes"
+            <FiltersTitleCard />
+            <Bandera2 callS="/api/red_flag_2/get_maximo_minimo_oferentes" callB="/api/red_flag_2/get_procesos_contratacion_oferentes/"
               text="Selecciona el número de oferentes de los procesos de contratación abiertos:"/>
             {/*<ChartCardFlag2 />*/}
-            <MixedChart2 call="/api/red_flag_2/get_procesos_contratacion_oferentes/"/>
             <DonutChart call="/api/red_flag_2/get_integridad_de_datos_flag2/" id="contractId"
               plotLabel="Calidad de los datos para el cálculo de la bandera"/>
             <BarChart call="/api/red_flag_2/get_resumen_integridad_de_datos_flag2/"
@@ -188,11 +192,9 @@ export default function CenteredTabs(props) {
           />
           <CalculationCard info="Número total de procesos de contratación adjudicados por métodos competitivos / número total de procesos de contratación"/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
+            <FiltersTitleCard />
             {/*<ChartCardFlag3 />*/}
-            <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"
-              plotLabel="Distribución de contratos por método de adjudicación"/>
-            <MixedChart3 call="/api/red_flag_3/distribucion_contratos_anuales_por_adjudicacion/"/>
+            <Bandera3 />
 
           </Grid>
         </Grid>
@@ -217,43 +219,15 @@ export default function CenteredTabs(props) {
           />
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
-            <Slider call="/api/red_flag_4/get_maximo_minimo_aumento_porcentual/"
-              params={{
-              	"fecha_inicio": "2015-12-29",
-              	"fecha_fin": "2017-10-10"
-              }}
-              text="Selecciona el aumento porcentual:"/>
-            {/*<ChartCardFlag4 />*/}
-            <DonutChart call="/api/red_flag_4/get_integridad_de_datos_adjudicacion/" id="contractId"
-              plotLabel="Calidad de los datos para cálculo de la bandera"/>
-            <BarChart call="/api/red_flag_4/get_resumen_integridad_de_datos_adjudicacion/"
-              plotLabel="Resumen de la calidad de los datos para cálculo de la bandera"/>
-            <LineChart2y call="/api/red_flag_4/montos_adjudicacion_inicial_contrato_final/"
-              params = {{
-                "percentage_inicial": "",
-                "percentage_final": "",
-                "fecha_inicio": "",
-                "fecha_fin": ""
-              }}
-              label1="contractValue" label2="awardValue"
-              plotLabel="Monto adjudicación (inicial) y contratación (final)"
-              data1Label="Adjudicación" data2Label="Contratación"/>
-            <MixedChart4 call="/api/red_flag_4/montos_adjudicacion_contrato/"/>
-            <DonutChart call="/api/red_flag_4/distribucion_de_montos_adjudicados/" id="contractValue"
-              params={{
-	               "percentage_inicial":"",
-	               "percentage_final":"",
-	               "fecha_inicio": "",
-	               "fecha_fin": ""}}
-               plotLabel="Distribución de los montos adjudicados por método de adjudicación"/>
-            <DonutChart call="/api/red_flag_4/distribucion_de_montos_contratados/" id="awardValue"
-              params={{
-  	              "percentage_inicial":"",
-  	              "percentage_final":"",
-  	              "fecha_inicio": "",
-  	              "fecha_fin": ""}}
-              plotLabel="Distribución de los montos contratados por método de adjudicación"/>
+            <FiltersTitleCard />
+              <Bandera4
+                callS="/api/red_flag_4/get_maximo_minimo_aumento_porcentual/"
+                paramsS={{
+                	"fecha_inicio": "2015-12-29",
+                	"fecha_fin": "2017-10-10"
+                }}
+                text="Selecciona el aumento porcentual:"
+              />
 
           </Grid>
         </Grid>
@@ -278,11 +252,10 @@ export default function CenteredTabs(props) {
           />
           <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
           <Grid item sm container xs={6}>
-            <FiltersCard />
-            <Slider call="/api/red_flag_5/get_maximo_minimo_enmiendas"
-              text="Selecciona el número de enmiendas:"/>
+            <FiltersTitleCard />
             {/*<ChartCardFlag5 />*/}
-            <MixedChart5 call="/api/red_flag_5/get_contratos_enmiendas/"/>
+            <Bandera5 callS="/api/red_flag_5/get_maximo_minimo_enmiendas" callB="/api/red_flag_5/get_contratos_enmiendas/"
+              text="Selecciona el número de enmiendas:"/>
             <DonutChart call="/api/red_flag_5/get_integridad_de_datos_enmiendas/" id="contractId"
               />
             <BarChart call="/api/red_flag_5/get_resumen_integridad_de_datos_enmiendas/"/>

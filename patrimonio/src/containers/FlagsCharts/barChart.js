@@ -10,7 +10,6 @@ import {
   Radar
 } from "react-chartjs-2";
 
-
 const colors = [
     {
       // blue
@@ -64,37 +63,34 @@ class BarGrafica extends Component {
     }
   }
 
-
-
   componentWillMount() {
     var arreglo_tags = [];
     var datasets_t = [];
+
     API.post(this.props.call)
             .then(response => {
-
 
               response.data.forEach(function(item) {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item["contractId"]);
-                console.log(datasets_t);
-                console.log(arreglo_tags);
               });
+
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                  console.log(this.state);
-                  index++;
-                }
+                index++;
+              }
 
               index = 0;
               while (index < datasets_t.length) {
                 this.setState(prevState => ({
                     datasets: [...prevState.datasets, datasets_t[index]]
                 }))
-                  index++;
-                }
+                index++;
+              }
+
             }).catch(error => {
                 console.log(error);
             });
@@ -153,32 +149,35 @@ class BarGrafica extends Component {
   }
 
   render() {
-    console.log(this.state.datasets);
     this.data  = {
- labels: this.state.labels,
- datasets: [
-   {
-     //label: 'My First dataset',
-     backgroundColor: 'rgba(255,99,132,0.2)',
-     borderColor: 'rgba(255,99,132,1)',
-     borderWidth: 1,
-     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-     hoverBorderColor: 'rgba(255,99,132,1)',
-     data: this.state.datasets,
+      labels: this.state.labels,
+      datasets: [
+        {
+          //label: 'My First dataset',
+         backgroundColor: 'rgba(255,99,132,0.2)',
+         borderColor: 'rgba(255,99,132,1)',
+         borderWidth: 1,
+         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+         hoverBorderColor: 'rgba(255,99,132,1)',
+         data: this.state.datasets,
+       }
+     ]
    }
- ]
-}
-console.log(this.data);
-    return (
+
+   return (
       <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
-            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
+            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">
+              {this.props.plotLabel}
+            </h5>
+
             <Bar
               responsive={true}
               options={this.optionsBar()}
               data={this.mergeColorsIntoBarData(this.data)}
             />
+
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import API from '../../Utils/Api';
+import { handleChange } from '../FlagsCharts/selectExample';
 
 
 const styles = theme => ({
@@ -55,7 +56,6 @@ function sliderLabels(val) {
     let c = {value: i, label: i.toString()};
     marksLabels.push(c);
   }
-  console.log(marksLabels);
   return marksLabels
 };
 
@@ -63,9 +63,14 @@ function sliderLabels(val) {
 class RangeSlider extends Component {
   constructor(props) {
     super(props)
+    this.handleChange = handleChange.bind(this);
     this.state = {
-      value: [20, 100],
-      values: []
+
+      values: [],
+      labels:[],
+      datasets:[],
+      amounts:[],
+      acumulados:[],
     }
   }
 
@@ -80,7 +85,6 @@ class RangeSlider extends Component {
                 min = item["min"];
               });
               let data = [max, min];
-              console.log(min);
 
               var index = 0;
               while (index < data.length) {
@@ -89,7 +93,6 @@ class RangeSlider extends Component {
                 }))
                 index++;
               }
-              console.log(this.state.values);
 
             }).catch(error => {
                 console.log(error);
@@ -98,9 +101,7 @@ class RangeSlider extends Component {
 
   render() {
     const { classes } = this.props;
-    const handleChange = (event, newValue) => {
-      this.setState({ value: newValue })
-    };
+    console.log(this.state.value);
     return(
       <div className={classes.root}>
         <Paper className={classes.paper}>
@@ -109,17 +110,15 @@ class RangeSlider extends Component {
             <Typography className={classes.body} color="textSecondary">{this.props.text}</Typography>
           </Grid>
 
-
           <Slider
             max={this.state.values[0]}
-            value={this.state.value}
-            onChange={handleChange}
+            value={this.state.value ? this.state.value : 100}
+            onChange={this.handleChange}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
             getAriaValueText={valuetext}
             marks={sliderLabels(this.state.values[0])}
           />
-
 
         </Paper>
       </div>

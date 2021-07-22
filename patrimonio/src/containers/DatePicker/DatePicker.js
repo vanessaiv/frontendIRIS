@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
+class Filters extends React.Component {
 
-// CSS Modules, react-datepicker-cssmodules.css
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+  constructor(props) {
+    super(props);
+    this.state = {
+      startDate : new Date()
+    };
+    this.handleStartChange = this.handleStartChange.bind(this);
+  }
 
-export default function Picker() {
-  const [startDate, setStartDate] = useState(new Date());
-  return (
-    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-  );
-};
+  handleStartChange = (date) => {
+    this.setState({
+      startDate : date
+    })
+  }
+
+
+  render() {
+    return (
+      <div className="filters">
+          <div id="filterbox">
+            <p id="title">Filtres</p>
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleStartChange}
+              placeholderText="Select a date"/>
+
+          </div>
+      </div>
+    )
+  }
+}
+
+
+
+export default Filters;

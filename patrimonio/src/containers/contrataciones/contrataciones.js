@@ -15,19 +15,9 @@ import RedFlagCard from '../../components/RedFlagCard/RedFlagCard';
 import InfoCard from '../../components/InfoCard/InfoCard';
 import CalculationCard from '../../components/CalculationCard/CalculationCard';
 
-import FiltersCard from '../../components/FiltersCard/FiltersCard';
-import SliderCard from '../../components/SliderCard/SliderCard';
-
-import MixedChart from '../FlagsCharts/mixedChartFlag1';
-import MixedChart2 from '../FlagsCharts/mixedChartFlag2';
-import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
-import MixedChart4 from '../FlagsCharts/mixedChartFlag4';
-import MixedChart5 from '../FlagsCharts/mixedChartFlag5';
 import DonutChart from '../FlagsCharts/donutChart';
 import BarChart from '../FlagsCharts/barChart';
-import LineChart2y from '../FlagsCharts/lineChart2yAxis';
 
-import Slider from '../Slider/Slider';
 import Bandera1 from './bandera1';
 import Bandera2 from './bandera2';
 import Bandera3 from './bandera3';

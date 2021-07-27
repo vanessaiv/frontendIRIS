@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-
+import moment from 'moment';
 
 const rand = () => Math.round(Math.random() * 20 - 10);
 var arreglo_tags = [];
@@ -23,6 +23,7 @@ var amounts = []; //revisar
 var valor_acumulado = 0;
 var total = 0;
 var acumulado = 0;
+var timeout;
 
 const colors = [
     {
@@ -130,8 +131,8 @@ class Bandera2 extends Component {
       amounts:[],
       acumulados:[],
       values: [],
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: moment("08-12-2016").toDate(),
+      endDate: moment("01-09-2018").toDate(),
     }
   }
 
@@ -208,42 +209,45 @@ class Bandera2 extends Component {
     this.setState({ value: event.target.value });
 
     return(
-      API.post(this.props.callB,
-              jsonRequest,{ crossDomain: true }
-              )
-              .then(response => {
-                response.data.forEach(function(item) {
-                  arreglo_tags.push(item["_id"]);
-                  datasets_t.push(item["contractId"]);
-                  total = datasets_t.reduce((a, b) => a + b, 0)
+      timeout && clearTimeout(timeout),
+      timeout = setTimeout(() => {
+        API.post(this.props.callB,
+                jsonRequest,{ crossDomain: true }
+                )
+                .then(response => {
+                  response.data.forEach(function(item) {
+                    arreglo_tags.push(item["_id"]);
+                    datasets_t.push(item["contractId"]);
+                    total = datasets_t.reduce((a, b) => a + b, 0)
 
-                });
-                var index = 0;
-                while (index < arreglo_tags.length) {
-                  this.setState(prevState => ({
-                      labels: [...prevState.labels, arreglo_tags[index]]
-                  }))
-                  index++;
-                }
+                  });
+                  var index = 0;
+                  while (index < arreglo_tags.length) {
+                    this.setState(prevState => ({
+                        labels: [...prevState.labels, arreglo_tags[index]]
+                    }))
+                    index++;
+                  }
 
-                index = 0;
-                while (index < datasets_t.length) {
-                  this.setState(prevState => ({
-                      datasets: [...prevState.datasets, datasets_t[index]]
-                  }))
-                  acumulado += datasets_t[index]
-                  valor_acumulado = (acumulado/total)*100
+                  index = 0;
+                  while (index < datasets_t.length) {
+                    this.setState(prevState => ({
+                        datasets: [...prevState.datasets, datasets_t[index]]
+                    }))
+                    acumulado += datasets_t[index]
+                    valor_acumulado = (acumulado/total)*100
 
-                  this.setState(prevState => ({
-                      acumulados: [...prevState.acumulados, valor_acumulado]
-                  }))
-                  index++;
-                }
+                    this.setState(prevState => ({
+                        acumulados: [...prevState.acumulados, valor_acumulado]
+                    }))
+                    index++;
+                  }
 
-              }).catch(error => {
-                  console.log(error);
-              })
-          )
+                }).catch(error => {
+                    console.log(error);
+                })
+      }, 500)
+    )
   }
 
   componentDidMount(){
@@ -301,18 +305,20 @@ class Bandera2 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={6} spacing={5}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               Selecciona la fecha de inicio y final del periodo de contrataciones a analizar:
             </Typography>
           </Grid>
 
           <DatePicker
+            dateFormat="dd-MM-yyyy"
             placeholderText={"Select a date"}
             selected={this.state.startDate}
             onChange={this.handleStartChange}
           />
 
           <DatePicker
+            dateFormat="dd-MM-yyyy"
             selected={this.state.endDate}
             onChange={this.handleEndChange}
             placeholderText={"Select a date"}
@@ -323,7 +329,7 @@ class Bandera2 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={12} spacing={3}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               {this.props.text}
             </Typography>
           </Grid>

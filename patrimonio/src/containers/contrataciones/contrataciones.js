@@ -112,7 +112,7 @@ export default function CenteredTabs(props) {
 
       <TabPanel value={props.value} index={0} className={classes.tabpanel}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos a nivel general" />
+          <TitleCard title="Bandera (indicador) de tiempo insuficiente para que los licitantes interesados preparen ofertas competitivas" />
           <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
             info= "Un periodo de tiempo insuficiente no permitirá a todos los licitantes interesados preparar y presentar ofertas de calidad. Los licitantes que hayan sido “informados” antes de la apertura pública pueden tener ventaja injusta teniendo más tiempo para preparar las ofertas."/>
@@ -141,7 +141,7 @@ export default function CenteredTabs(props) {
       </TabPanel>
       <TabPanel value={props.value} index={1}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos a nivel composición"/>
+          <TitleCard title="Bajo número de oferentes (participantes) en los procesos competitivos (procesos de contratación abiertos)"/>
           <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
             info="Un mayor número de oferentes por licitación puede indicar que los procesos son más competitivos y confiables, tanto en la forma del proceso (abierta en lugar de cerrada) como en el nivel de competencia dentro de cada proceso."/>
@@ -169,7 +169,7 @@ export default function CenteredTabs(props) {
       </TabPanel>
       <TabPanel value={props.value} index={2}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos al nivel del listado de servidores"/>
+          <TitleCard title="Bajo porcentaje de licitaciones ganadas (adjudicadas) mediante procesos competitivos"/>
           <PhaseCard phase="Licitación" icon={<BusinessSharpIcon/>}/>
           <RedFlagCard
             info="Un mayor porcentaje total de ofertas adjudicadas a través de procesos competitivos puede indicar una mayor apertura en compra pública. El uso de procedimientos competitivos puede permitir que los licitantes potenciales tengan mayor acceso a los procesos de contratación pública y, por lo tanto, puede resultar en una mayor competencia der mercado."/>

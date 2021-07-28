@@ -107,6 +107,12 @@ class MixedChart extends Component {
                 options={{
                   scales: {
                     yAxes: [{
+                      ticks: {
+                        // Abbreviate the thousands
+                        callback: function(value, index, values) {
+                            return value / 1e6 + 'M';
+                          }
+                        },
                       display: true,
                       id: 'A',
                       type: 'linear',
@@ -114,6 +120,12 @@ class MixedChart extends Component {
                       labelString: 'Monto (MDP)'
 
                     }, {
+                      ticks: {
+                        // Abbreviate the thousands
+                        callback: function(value, index, values) {
+                            return value / 1e6 + 'M';
+                          }
+                        },
                       display: true,
                       id: 'B',
                       type: 'linear',
@@ -133,7 +145,7 @@ class MixedChart extends Component {
                   }
                 }}
             />
-            
+
           </div>
         </div>
       </div>

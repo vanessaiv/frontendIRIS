@@ -102,6 +102,20 @@ const colors = [
     }
   });
 
+  const DataSlider = withStyles({
+    root: {
+      color: '#00acc1',
+    },
+    active: {},
+    track: {
+      height: 3,
+    },
+    rail: {
+      color: '#d8d8d8',
+      height: 2,
+    },
+  })(Slider);
+
   function valuetext(value) {
     return `${value}`;
   }
@@ -305,7 +319,7 @@ class Bandera5 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={6} spacing={5}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               Selecciona la fecha de inicio y final del periodo de contrataciones a analizar:
             </Typography>
           </Grid>
@@ -329,12 +343,12 @@ class Bandera5 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={12} spacing={3}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               {this.props.text}
             </Typography>
           </Grid>
 
-          <Slider
+          <DataSlider
             max={this.state.values[0]}
             value={this.state.value ? this.state.value: 40}
             onChange={this.handleChange}

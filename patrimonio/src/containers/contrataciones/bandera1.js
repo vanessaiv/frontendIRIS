@@ -102,6 +102,20 @@ const colors = [
     }
   });
 
+  const DataSlider = withStyles({
+    root: {
+      color: '#00acc1',
+    },
+    active: {},
+    track: {
+      height: 3,
+    },
+    rail: {
+      color: '#d8d8d8',
+      height: 2,
+    },
+  })(Slider);
+
   function valuetext(value) {
     return `${value}`;
   }
@@ -334,7 +348,7 @@ class Bandera1 extends Component {
             </Typography>
           </Grid>
 
-          <Slider
+          <DataSlider
             max={this.state.values[0]}
             value={this.state.value ? this.state.value: 100}
             onChange={this.handleChange}
@@ -356,6 +370,15 @@ class Bandera1 extends Component {
                   options={{
                     scales: {
                       yAxes: [{
+                        ticks: {
+                          callback: function(value, index, values) {
+                            if(parseInt(value) >= 1000){
+                              return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                              return value;
+                            }
+                            }
+                          },
                           display: true,
                           position: 'left',
                           type: "linear",

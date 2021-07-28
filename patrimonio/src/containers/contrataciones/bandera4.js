@@ -106,6 +106,20 @@ const colors = [
     }
   });
 
+  const DataSlider = withStyles({
+    root: {
+      color: '#00acc1',
+    },
+    active: {},
+    track: {
+      height: 3,
+    },
+    rail: {
+      color: '#d8d8d8',
+      height: 2,
+    },
+  })(Slider);
+
   function valuetext(value) {
     return `${value}`;
   }
@@ -113,8 +127,15 @@ const colors = [
   function sliderLabels(val) {
     var marksLabels = [];
     for (var i = 0; i <= val; i+=Math.floor(val/10)) {
-      let c = {value: i, label: i.toString()};
-      marksLabels.push(c);
+
+      if(parseInt(i) >= 1000){
+        let c = {value: i, label: (Math.floor(i / 1e6) + 'M').toString()};
+        marksLabels.push(c);
+        console.log(marksLabels);
+      } else {
+        let c = {value: i, label: i.toString()};
+        marksLabels.push(c);
+      }
     }
     return marksLabels
   };
@@ -309,7 +330,7 @@ class Bandera4 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={6} spacing={5}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               Selecciona la fecha de inicio y final del periodo de contrataciones a analizar:
             </Typography>
           </Grid>
@@ -333,12 +354,12 @@ class Bandera4 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={12} spacing={3}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               {this.props.text}
             </Typography>
           </Grid>
 
-          <Slider
+          <DataSlider
             max={this.state.values[0]}
             value={this.state.value ? this.state.value: 100}
             onChange={this.handleChange}
@@ -353,13 +374,22 @@ class Bandera4 extends Component {
         <div className="card shadow" >
           <div className="card-body text-center">
             <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">
-              Evolución de ingresos de servidores públicos
+              Procesos de contratación con bandera roja por la diferencia porcentual entre monto de adjudicación y monto final del contrato (Número de contratos y Distribución)
             </h5>
 
             <Bar data={ this.data }
                   options={{
                     scales: {
                       yAxes: [{
+                        ticks: {
+                          callback: function(value, index, values) {
+                            if(parseInt(value) >= 1000){
+                              return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                              return value;
+                            }
+                            }
+                          },
                           display: true,
                           position: 'left',
                           type: "linear",
@@ -377,7 +407,7 @@ class Bandera4 extends Component {
                           display: true,
                           scaleLabel: {
                             display: true,
-                            labelString: 'Tiempo para presentar ofertas (días)'
+                            labelString: 'Diferencia porcentual (Contratación - Adjudicación)/Adjudicación'
                           },
                           gridLines: {
                             display: false

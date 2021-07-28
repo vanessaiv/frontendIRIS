@@ -83,7 +83,7 @@ class BarGrafica extends Component {
                 arreglo_tags.push(item["_id"]);
                 datasets_t.push(item[label1]);
                 datasets_a.push(item[label2]);
-                
+
               });
               var index = 0;
               while (index < arreglo_tags.length) {
@@ -187,12 +187,24 @@ console.log(this.data);
               options={{
                 scales: {
                   yAxes: [{
+                    ticks: {
+                      // Abbreviate the thousands
+                      callback: function(value, index, values) {
+                          return value / 1e6 + 'M';
+                        }
+                      },
                     display: true,
                     id: 'A',
                     type: 'linear',
                     position: 'left',
                     labelString: 'Monto (MDP)'
                   }, {
+                    ticks: {
+                      // Abbreviate the thousands
+                      callback: function(value, index, values) {
+                          return value / 1e6 + 'M';
+                        }
+                      },
                     display: true,
                     id: 'B',
                     type: 'linear',

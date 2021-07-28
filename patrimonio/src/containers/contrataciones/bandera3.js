@@ -7,6 +7,7 @@ import {
 } from "react-chartjs-2";
 import DonutChart from '../FlagsCharts/donutChart';
 import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
+import StackedBarChart1 from '../FlagsCharts/stackedBarChart1';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -70,7 +71,13 @@ const colors = [
 
   const styles = theme => ({
     root: {
-      width: 800,
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(1.3),
+        width: '48%',
+        height: theme.spacing(12),
+      },
     },
     paper: {
       padding: theme.spacing(5),
@@ -101,7 +108,12 @@ const colors = [
     },
     text: {
       fontWeight: "bold"
-    }
+    },
+    cards: {
+      display: 'flex',
+      alignItems: "center",
+      flexWrap: 'wrap',
+    },
   });
 
   function valuetext(value) {
@@ -307,7 +319,7 @@ class Bandera3 extends Component {
         <Paper className={classes.paper}>
 
           <Grid item xs={6} spacing={5}>
-            <Typography className={classes.body} color="textSecondary">
+            <Typography className={classes.body} >
               Selecciona la fecha de inicio y final del periodo de contrataciones a analizar:
             </Typography>
           </Grid>
@@ -328,53 +340,34 @@ class Bandera3 extends Component {
 
         </Paper>
 
-        <div className="card shadow" >
-          <div className="card-body text-center">
-            <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">
-              Evolución de ingresos de servidores públicos
-            </h5>
-
-            <Bar data={ this.data }
-                  options={{
-                    scales: {
-                      yAxes: [{
-                          display: true,
-                          position: 'left',
-                          type: "linear",
-                          id: "A",
-                          gridLines: {
-                            display: false
-                          }
-                        }, {
-                          display: true,
-                          position: 'right',
-                          type: "linear",
-                          id: "B"
-                      }],
-                      xAxes: [{
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Tiempo para presentar ofertas (días)'
-                          },
-                          gridLines: {
-                            display: false
-                          }
-                        }]
-                    },
-                    legend: {
-                      position: "bottom",
-                      labels: {
-                        pointStyle: "circle",
-                        usePointStyle: true,
-                        fontSize: 16,
-                        padding: 13,
-                      }
-                    }
-            }}/>
-
-          </div>
+        <div className={classes.root}>
+          <Paper className={classes.cards}>
+            <Grid container direction="column" spacing={1} justifyContent="space-evenly" alignItems="center">
+              <Typography className={classes.body} color="textSecondary" >
+                NÚMERO DE CONTRATOS:
+              </Typography>
+              <h3>
+              348379
+              </h3>
+            </Grid>
+          </Paper>
+          <Paper className={classes.cards}>
+            <Grid container direction="column" spacing={1} justifyContent="space-evenly" alignItems="center">
+              <Typography className={classes.body} color="textSecondary">
+                MONTO TOTAL:
+              </Typography>
+              <h3>
+              348379
+              </h3>
+            </Grid>
+          </Paper>
         </div>
+
+        <StackedBarChart1 call=""
+          params={{
+          	}}
+          plotLabel= "Cantidad de contratos anuales por tipo (método) de adjudicación"
+          labels = {['Directa', 'Abierta', 'Selectiva', 'No asignado']}/>
 
         <Grid item sm container xs={6}>
           <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"

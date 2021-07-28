@@ -101,6 +101,12 @@ class BarGrafica extends Component {
       cutoutPercentage: 65,
       scales: {
         yAxes: [{
+          ticks: {
+            // Abbreviate the thousands
+            callback: function(value, index, values) {
+                return value / 1e3 + 'K';
+              }
+            },
           scaleLabel: {
             display: true,
             labelString: 'Número de contratos'

@@ -145,6 +145,12 @@ class MixedChart extends Component {
                   options={{
                     scales: {
                       yAxes: [{
+                        ticks: {
+                          // Abbreviate the thousands
+                          callback: function(value, index, values) {
+                              return value / 1e3 + 'K';
+                            }
+                          },
                           display: true,
                           position: 'left',
                           type: "linear",
@@ -153,6 +159,12 @@ class MixedChart extends Component {
                             display: false
                           }
                         }, {
+                        ticks: {
+                          // Abbreviate the thousands
+                          callback: function(value, index, values) {
+                              return value / 1e3 + 'K';
+                            }
+                          },
                           display: true,
                           position: 'right',
                           type: "linear",

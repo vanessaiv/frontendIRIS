@@ -1,13 +1,7 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Line
 } from "react-chartjs-2";
 
 
@@ -52,7 +46,7 @@ const colors = [
     }
   ];
 
-class BarGrafica extends Component {
+class LineGrafica extends Component {
 
   constructor(props) {
     super(props)
@@ -226,4 +220,4 @@ class BarGrafica extends Component {
 }
 
 
-export default BarGrafica;
+export default LineGrafica;

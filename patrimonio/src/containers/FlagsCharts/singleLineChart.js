@@ -1,13 +1,7 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Line
 } from "react-chartjs-2";
 
 
@@ -52,7 +46,7 @@ const colors = [
     }
   ];
 
-class BarGrafica extends Component {
+class LineGrafica extends Component {
 
   constructor(props) {
     super(props)
@@ -64,8 +58,6 @@ class BarGrafica extends Component {
       datasetsa:[]
     }
   }
-
-
 
   componentWillMount() {
     var arreglo_tags = [];
@@ -86,18 +78,17 @@ class BarGrafica extends Component {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                  console.log(this.state);
-                  index++;
-                }
+                index++;
+              }
 
               index = 0;
               while (index < datasets_t.length) {
                 this.setState(prevState => ({
                     datasets: [...prevState.datasets, datasets_t[index]]
                 }))
-
                 index++;
-                }
+              }
+
             }).catch(error => {
                 console.log(error);
             });
@@ -118,10 +109,6 @@ class BarGrafica extends Component {
 
 
   mergeColorsIntoLineData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
     return {
       ...srcData,
       datasets: srcData.datasets.map((dataset, k) => {
@@ -158,7 +145,6 @@ class BarGrafica extends Component {
 
   }
 
-console.log(this.data);
     return (
       <div className="col-sm-6 py-3">
         <div className="card shadow">
@@ -170,6 +156,11 @@ console.log(this.data);
               options={{
                 scales: {
                   yAxes: [{
+                    ticks: {
+                      callback: function(value, index, values) {
+                          return value / 1e6 + 'M';
+                        }
+                      },
                     display: true,
                     id: 'A',
                     type: 'linear',
@@ -204,4 +195,4 @@ console.log(this.data);
 }
 
 
-export default BarGrafica;
+export default LineGrafica;

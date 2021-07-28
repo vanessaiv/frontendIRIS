@@ -13,6 +13,8 @@ import BusinessSharpIcon from '@material-ui/icons/BusinessSharp';
 import RedFlagCard from '../../components/RedFlagCard/RedFlagCard';
 import InfoCard from '../../components/InfoCard/InfoCard';
 import CalculationCard from '../../components/CalculationCard/CalculationCard';
+import FuncionariosCard from '../../components/FuncionariosCard/FuncionariosCard';
+import TextCard from '../../components/FuncionariosCard/TextCard';
 
 import FiltersCard from '../../components/FiltersCard/FiltersCard';
 
@@ -140,14 +142,14 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={0} className={classes.tabpanel}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos a nivel composición" />
-          <RedFlagCard
+          <FuncionariosCard
             info= {<p>En esta sección puedes analizar la evolución patrimonial de los:
                     <li className={classes.boldtext}>Ingresos</li>
                     <li className={classes.boldtext}>Activos</li>
                     <li className={classes.boldtext}>Pasivos</li>
                     de las declaraciones de un grupo de servidores públicos y compararlas con el total de servidores públicos.
                   </p>}/>
-          <RedFlagCard
+                <TextCard
             info={<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
 
               <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
@@ -238,14 +240,14 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={1}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos a nivel general"/>
-          <RedFlagCard
+          <FuncionariosCard
             info= {<p>En esta sección puedes analizar cómo se componen las declaraciones de un grupo de servidores públicos, incluyendo sus:
                     <li className={classes.boldtext}>Ingresos</li>
                     <li className={classes.boldtext}>Activos</li>
                     <li className={classes.boldtext}>Pasivos</li>
                     y compararlas contra el total de servidores públicos.
                   </p>}/>
-          <RedFlagCard
+          <TextCard
             info={<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
               <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
               <li className={classes.boldtext}>Institución: se puede seleccionar cualquier institución de gobierno.</li>
@@ -302,7 +304,7 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={2}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos al nivel del listado de servidores"/>
-          <RedFlagCard
+          <FuncionariosCard
             info= {<p>En esta sección puedes consultar un listado con la información de los servidores públicos, incluyendo:
                     <li className={classes.boldtext}>RFC</li>
                     <li className={classes.boldtext}>Fecha de última declaración</li>
@@ -315,7 +317,7 @@ export default function CenteredTabs(props) {
                     <li className={classes.boldtext}>Activos</li>
                     <li className={classes.boldtext}>Pasivos</li>
                   </p>}/>
-          <RedFlagCard
+          <TextCard
             info= {<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
                     <li className={classes.boldtext}>Nivel del gobierno: se puede seleccionar federal, estatal o municipal.</li>
                     <li className={classes.boldtext}>Institución: se puede seleccionar cualquier institución de gobierno.</li>
@@ -364,7 +366,7 @@ export default function CenteredTabs(props) {
       <TabPanel value={props.value} index={3}>
         <Grid container className={classes.dashboard}>
           <TitleCard title="Exploración de datos a nivel de servidor público"/>
-          <RedFlagCard
+          <FuncionariosCard
             info= {<p>En esta sección puedes visualizar el detalle completo de los ingresos, activos y pasivos de algún servidor público, en específico:
                     <li className={classes.boldtext}>RFC</li>
                     <li className={classes.boldtext}>Fecha de última declaración</li>
@@ -378,7 +380,7 @@ export default function CenteredTabs(props) {
                     <li className={classes.boldtext}>Pasivos</li>
                     Adicionalmente, es posible visualizar algunas gráficas de razones financieras compuestas por los ingresos, activos y pasivos del servidor público.
                   </p>}/>
-          <RedFlagCard
+          <TextCard
             info= {<p>Es posible filtrar el conjunto de declaraciones de los servidores públicos por:
                     <li className={classes.boldtext}>RFC: Se puede especificar el RFC de algún servidor público en específico.</li>
                     <li className={classes.boldtext}>Nombre: Se puede especificar el nombre de algún servidor público en específico.</li>

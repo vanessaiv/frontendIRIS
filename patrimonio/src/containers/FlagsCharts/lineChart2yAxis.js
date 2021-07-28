@@ -1,13 +1,7 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Line
 } from "react-chartjs-2";
 
 
@@ -126,10 +120,6 @@ class BarGrafica extends Component {
 
 
   mergeColorsIntoLineData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
     return {
       ...srcData,
       datasets: srcData.datasets.map((dataset, k) => {
@@ -175,7 +165,6 @@ class BarGrafica extends Component {
 
   }
 
-console.log(this.data);
     return (
       <div className="col-sm-6 py-3">
         <div className="card shadow">
@@ -188,7 +177,6 @@ console.log(this.data);
                 scales: {
                   yAxes: [{
                     ticks: {
-                      // Abbreviate the thousands
                       callback: function(value, index, values) {
                           return value / 1e6 + 'M';
                         }
@@ -200,7 +188,6 @@ console.log(this.data);
                     labelString: 'Monto (MDP)'
                   }, {
                     ticks: {
-                      // Abbreviate the thousands
                       callback: function(value, index, values) {
                           return value / 1e6 + 'M';
                         }

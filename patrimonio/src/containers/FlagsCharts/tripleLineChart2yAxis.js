@@ -1,13 +1,7 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Line
 } from "react-chartjs-2";
 
 
@@ -94,7 +88,6 @@ class BarGrafica extends Component {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                  console.log(this.state);
                   index++;
                 }
 
@@ -105,10 +98,8 @@ class BarGrafica extends Component {
                     datasetsa: [...prevState.datasetsa, datasets2[index]],
                     datasetsb: [...prevState.datasetsb, datasets3[index]]
                 }))
-
                 index++;
-
-                }
+              }
 
             }).catch(error => {
                 console.log(error);
@@ -130,10 +121,6 @@ class BarGrafica extends Component {
 
 
   mergeColorsIntoLineData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
     return {
       ...srcData,
       datasets: srcData.datasets.map((dataset, k) => {
@@ -190,7 +177,6 @@ class BarGrafica extends Component {
 
   }
 
-console.log(this.data);
     return (
       <div className="col-sm-12 py-3">
         <div className="card shadow">
@@ -202,12 +188,22 @@ console.log(this.data);
               options={{
                 scales: {
                   yAxes: [{
+                    ticks: {
+                      callback: function(value, index, values) {
+                          return value / 1e6 + 'M';
+                        }
+                      },
                     display: true,
                     id: 'A',
                     type: 'linear',
                     position: 'left',
                     labelString: 'Monto (MDP)'
                   }, {
+                    ticks: {
+                      callback: function(value, index, values) {
+                          return value / 1e6 + 'M';
+                        }
+                      },
                     display: true,
                     id: 'B',
                     type: 'linear',

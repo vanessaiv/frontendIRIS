@@ -1,56 +1,8 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Bar
 } from "react-chartjs-2";
-
-
-const colors = [
-    {
-      // blue
-      borderWidth: 0,
-      borderColor: "rgba(101,147,185,1)",
-      backgroundColor: ["rgba(101,147,185,0.8)"],
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(101,147,185,1)",
-      pointHoverBorderColor: "magenta",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // pinky
-      borderWidth: 0,
-      borderColor: "rgba(220,120,220,1)",
-      backgroundColor: "rgba(220,120,220,0.8)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(220,120,220,1)",
-      pointHoverBorderColor: "#333",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // red
-      borderWidth: 0,
-      borderColor: "rgba(247,70,74,1)",
-      backgroundColor: "rgba(247,70,74,0.7)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(247,70,74,1)",
-      pointHoverBorderColor: "rgba(0,0,0,0.7)",
-      pointHoverBorderWidth: 1,
-      pointHoverBackgroundColor: "rgba(247,70,74,1)"
-    },
-    {
-      // lime
-      borderWidth: 0,
-      borderColor: "lime",
-      backgroundColor: "lime",
-      pointBackgroundColor: "lime"
-    }
-  ];
 
 class BarGrafica extends Component {
 
@@ -123,7 +75,6 @@ class BarGrafica extends Component {
 
   optionsBar() {
     return {
-      //cutoutPercentage: 65,
       scales: {
         yAxes: [{
           stacked: true,

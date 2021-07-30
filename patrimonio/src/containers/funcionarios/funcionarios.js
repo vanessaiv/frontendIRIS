@@ -30,6 +30,7 @@ import LineChart2y from '../FlagsCharts/lineChart2yAxis';
 import SingleLineChart from '../FlagsCharts/singleLineChart';
 import TripleLineChart from '../FlagsCharts/tripleLineChart';
 import TripleLineChart2y from '../FlagsCharts/tripleLineChart2yAxis';
+import General from './general';
 
 import Table from '../FlagsCharts/table';
 
@@ -172,6 +173,18 @@ export default function CenteredTabs(props) {
                 "governmentLevel": "",
                 "expresion": ""}}
               defaultLabel='Seleccionar Institución'/>
+            <General callL="/api/declaraciones/general/aggregate"
+              label1="totalIncome" label2="totalIncome_avg"
+              paramsL={{
+              	"datos":"total_ingresos_avg_ingresos",
+              	"institucion":"",
+              	"estado":"",
+              	"nivel_gobierno":""
+              }}
+              plotLabel="Evolución de ingresos del grupo de servidores públicos escogido vs. la mediana de la población de todos los servidores públicos"
+              data1Label="Monto de los ingresos (MDP)" data2Label="Promedio global: Monto de los ingresos (MDP)"
+              callD="/api/declaraciones/catalogos/niveles_de_gobierno" inputLabel='Nivel de gobierno' defaultLabel='Seleccionar Nivel de Gobierno'
+            />
             <LineChart call="/api/declaraciones/general/aggregate"
               label1="totalIncome" label2="totalIncome_avg"
               params={{

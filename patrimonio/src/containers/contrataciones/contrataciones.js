@@ -211,6 +211,13 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersTitleCard />
               <Bandera4
+                callB="/api/red_flag_4/get_procesos_contratacion/"
+                paramsB={{
+                  "percentage_inicial": "",
+                  "percentage_final": "",
+                  "fecha_inicio": "",
+                  "fecha_fin": ""
+                }}
                 callS="/api/red_flag_4/get_maximo_minimo_aumento_porcentual/"
                 paramsS={{
                 	"fecha_inicio": "2015-12-29",
@@ -224,23 +231,19 @@ export default function CenteredTabs(props) {
       </TabPanel>
       <TabPanel value={props.value} index={4}>
         <Grid container className={classes.dashboard}>
-          <TitleCard title="Exploración de datos a nivel de servidor público"/>
-          <PhaseCard phase="Adjudicación/" phas="Contrato" />
+          <TitleCard title="Alto porcentaje de contratos que tienen enmiendas (modificaciones)"/>
+          <PhaseCard phase="Contrato" />
           <RedFlagCard
             info={<p>
-              Una diferencia significativa entre el precio de adjudicación y el precio final del contrato puede ser señal de:
-                <li>Existencia de acuerdos "a puerta cerrada" entre proveedores y compradores. En algunos casos, el licitante ofrece un precio artificialmente bajo para ganar un contrato y luego aumenta los precios a través de enmiendas del contrato durante su implementación.</li>
-                <li>Mala planificación en los procesos de adjudicación. En algunos casos se subestima el costo del bien y servicio, reportando un monto de adjudicación muy pequeño con respecto al monto final del contrato.</li>
+              Un mayor número de contratos sin enmiendas puede indicar mayor integridad. La inestabilidad de un contrato puede ser un indicador de corrupción en ciertos casos; la integridad generalmente se maximiza cuando los términos finales de la licitación, adjudicación, contrato inicial y contrato final se corresponden estrechamente. El riesgo de las enmiendas es que los proveedores pueden ser seleccionados por haber ofrecido el precio más bajo y luego aumentan sus precios. Ésta es una forma legalmente permitida que facilita irregularidades en el proceso de contratación; como tal es difícil de monitorear y disminuye la integridad del proceso de compra pública.
               </p>}/>
           <InfoCard
             info={<p>
-              <li>ID de adjudicación</li>
-              <li>Monto de adjudicación</li>
               <li>ID del contrato</li>
-              <li>Monto del contrato</li>
+              <li>Enmiendas al contrato</li>
             </p>}
           />
-          <CalculationCard info="(Monto de contrato final - monto de adjudicación) / (monto de adjudicación)"/>
+        <CalculationCard info="Contratos con enmiendas / todos los contratos"/>
           <Grid item sm container xs={6}>
             <FiltersTitleCard />
             {/*<ChartCardFlag5 />*/}

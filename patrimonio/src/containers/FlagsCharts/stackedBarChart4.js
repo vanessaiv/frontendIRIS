@@ -39,26 +39,8 @@ class BarGrafica extends Component {
     var dataset2 = [];
     var dataset3 = [];
     var dataset4 = [];
-    var dataset5 = [];
-    var dataset6 = [];
-    var dataset7 = [];
-    var dataset8 = [];
-    var dataset9 = [];
-    var dataset10 = [];
     var datas = [];
-    var dataLabels = [
-      "sueldos_salarios_otros_empleos",
-      "sueldos_salarios_publicos",
-      "actividad_economica_menor",
-      "actividad_empresarial",
-      "actividad_profesional",
-      "arrendamiento",
-      "intereses",
-      "premios",
-      "enajenacion_bienes",
-      "otros_ingresos"];
-    var label1 = this.props.label1;
-    var label2 = this.props.label2;
+    var dataLabels = ["procurementMethod", "contractId"];
 
     API.post(this.props.call,
       this.props.params)
@@ -66,22 +48,26 @@ class BarGrafica extends Component {
 
 
               response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                dataset1.push(item[dataLabels[0]]);
-                dataset2.push(item[dataLabels[1]]);
-                dataset3.push(item[dataLabels[2]]);
-                dataset4.push(item[dataLabels[3]]);
-                dataset5.push(item[dataLabels[4]]);
-                dataset6.push(item[dataLabels[5]]);
-                dataset7.push(item[dataLabels[6]]);
-                dataset8.push(item[dataLabels[7]]);
-                dataset9.push(item[dataLabels[8]]);
-                dataset10.push(item[dataLabels[9]]);
+                arreglo_tags.push(item["_id"]["_datetime"]);
+
+                if (item["_id"][dataLabels[0]] === "Directa") {
+                  dataset1.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "Abierta") {
+                  dataset2.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "Selectiva") {
+                  dataset3.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "No asignado") {
+                  dataset4.push(item[dataLabels[1]]);
+                }
+
 
                 datas.push(item);
-                console.log(dataset1);
               });
 
+              arreglo_tags = [...new Set(arreglo_tags)];
 
               var index = 0;
               while (index < arreglo_tags.length) {
@@ -97,17 +83,10 @@ class BarGrafica extends Component {
                     datasets1: [...prevState.datasets1, dataset1[index]],
                     datasets2: [...prevState.datasets2, dataset2[index]],
                     datasets3: [...prevState.datasets3, dataset3[index]],
-                    datasets4: [...prevState.datasets4, dataset4[index]],
-                    datasets5: [...prevState.datasets5, dataset5[index]],
-                    datasets6: [...prevState.datasets6, dataset6[index]],
-                    datasets7: [...prevState.datasets7, dataset7[index]],
-                    datasets8: [...prevState.datasets8, dataset8[index]],
-                    datasets9: [...prevState.datasets9, dataset9[index]],
-                    datasets10: [...prevState.datasets10, dataset10[index]]
+                    datasets4: [...prevState.datasets4, dataset4[index]]
                 }))
                   index++;
                 }
-
 
             }).catch(error => {
                 console.log(error);
@@ -121,7 +100,7 @@ class BarGrafica extends Component {
           stacked: true,
           scaleLabel: {
             display: true,
-            labelString: 'Monto de los ingresos (MDP)'
+            labelString: 'Número de contratos'
           }
         }],
         xAxes: [{
@@ -147,6 +126,7 @@ class BarGrafica extends Component {
   }
 
   render() {
+
     this.data  = {
      labels: this.state.labels,
      datasets: [
@@ -157,7 +137,7 @@ class BarGrafica extends Component {
          hoverBackgroundColor: '#39dbff',
          hoverBorderColor: '#39dbff',
          data: this.state.datasets1,
-         label: 'Sueldos salarios otros empleos'
+         label: 'Directa'
        },
        {
          backgroundColor: '#ffd60b',
@@ -166,7 +146,7 @@ class BarGrafica extends Component {
          hoverBackgroundColor: '#ffdd00',
          hoverBorderColor: '#ffdd00',
          data: this.state.datasets2,
-         label: 'Sueldos salarios públicos'
+         label: 'Abierta'
        },
        {
          backgroundColor: '#bb00ff',
@@ -175,7 +155,7 @@ class BarGrafica extends Component {
          hoverBackgroundColor: '#d901ff',
          hoverBorderColor: '#d901ff',
          data: this.state.datasets3,
-         label: 'Actividad económica menor'
+         label: 'Selectiva'
        },
        {
          backgroundColor: '#ff602f',
@@ -184,63 +164,8 @@ class BarGrafica extends Component {
          hoverBackgroundColor: '#fa5d23',
          hoverBorderColor: '#fa5d23',
          data: this.state.datasets4,
-         label: 'Actividad empresarial'
-       },
-       {
-         backgroundColor: '#ff80ee',
-         borderColor: '#ff80ee',
-         borderWidth: 1,
-         hoverBackgroundColor: '#ff6ee4',
-         hoverBorderColor: '#ff6ee4',
-         data: this.state.datasets5,
-         label: 'Actividad profesional'
-       },
-       {
-         backgroundColor: '#6fe0cb',
-         borderColor: '#6fe0cb',
-         borderWidth: 1,
-         hoverBackgroundColor: '#69d1bc',
-         hoverBorderColor: '#69d1bc',
-         data: this.state.datasets6,
-         label: 'Arrendamiento'
-       },
-       {
-         backgroundColor: '#9fa3a8',
-         borderColor: '#9fa3a8',
-         borderWidth: 1,
-         hoverBackgroundColor: '#888b8f',
-         hoverBorderColor: '#888b8f',
-         data: this.state.datasets7,
-         label: 'Intereses'
-       },
-       {
-         backgroundColor: '#31c6e8',
-         borderColor: '#31c6e8',
-         borderWidth: 1,
-         hoverBackgroundColor: '#39dbff',
-         hoverBorderColor: '#39dbff',
-         data: this.state.datasets8,
-         label: 'Premios'
-       },
-       {
-         backgroundColor: '#ffd60b',
-         borderColor: '#ffd60b',
-         borderWidth: 1,
-         hoverBackgroundColor: '#ffdd00',
-         hoverBorderColor: '#ffdd00',
-         data: this.state.datasets9,
-         label: 'Enajenación de bienes'
-       },
-       {
-         backgroundColor: '#bb00ff',
-         borderColor: '#bb00ff',
-         borderWidth: 1,
-         hoverBackgroundColor: '#d901ff',
-         hoverBorderColor: '#d901ff',
-         data: this.state.datasets10,
-         label: 'Otros ingresos'
+         label: 'No asignado'
        }
-
      ]
     }
 

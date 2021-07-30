@@ -7,7 +7,7 @@ import {
 } from "react-chartjs-2";
 import DonutChart from '../FlagsCharts/donutChart';
 import MixedChart3 from '../FlagsCharts/mixedChartFlag3';
-import StackedBarChart1 from '../FlagsCharts/stackedBarChart1';
+import StackedBarChart4 from '../FlagsCharts/stackedBarChart4';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -28,106 +28,66 @@ var total = 0;
 var acumulado = 0;
 var timeout;
 
-const colors = [
-    {
-      // blue
-      borderWidth: 0,
-      borderColor: "rgba(101,147,185,1)",
-      backgroundColor: ["rgba(101,147,185,0.8)"],
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(101,147,185,1)",
-      pointHoverBorderColor: "magenta",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // pinky
-      borderWidth: 0,
-      borderColor: "rgba(220,120,220,1)",
-      backgroundColor: "rgba(220,120,220,0.8)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(220,120,220,1)",
-      pointHoverBorderColor: "#333",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // red
-      borderWidth: 0,
-      borderColor: "rgba(247,70,74,1)",
-      backgroundColor: "rgba(247,70,74,0.7)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(247,70,74,1)",
-      pointHoverBorderColor: "rgba(0,0,0,0.7)",
-      pointHoverBorderWidth: 1,
-      pointHoverBackgroundColor: "rgba(247,70,74,1)"
-    },
-    {
-      // lime
-      borderWidth: 0,
-      borderColor: "lime",
-      backgroundColor: "lime",
-      pointBackgroundColor: "lime"
-    }
-  ];
 
-  const styles = theme => ({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(1.3),
-        width: '48%',
-        height: theme.spacing(12),
-      },
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1.3),
+      width: '48%',
+      height: theme.spacing(12),
     },
-    paper: {
-      padding: theme.spacing(5),
-      display: 'inline-flex',
-      width: '100%',
-      maxHeight: "90vh",
-      position: 'relative',
-      flexGrow: 1,
-      flex: "auto",
-      alignItems: "center",
-      margin: theme.spacing(2, 0),
-    },
-    body: {
-      fontSize: 18,
-      textAlign: 'center',
-    },
-    title: {
-      fontSize: 25,
-      color: '#ff3d00',
-      fontWeight: "bold",
-      textAlign: 'center',
-    },
-    subtitle: {
-      fontSize: 20,
-      color: '#00acc1',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    text: {
-      fontWeight: "bold"
-    },
-    cards: {
-      display: 'flex',
-      alignItems: "center",
-      flexWrap: 'wrap',
-    },
-  });
+  },
+  paper: {
+    padding: theme.spacing(5),
+    display: 'inline-flex',
+    width: '100%',
+    maxHeight: "90vh",
+    position: 'relative',
+    flexGrow: 1,
+    flex: "auto",
+    alignItems: "center",
+    margin: theme.spacing(2, 0),
+  },
+  body: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 25,
+    color: '#ff3d00',
+    fontWeight: "bold",
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#00acc1',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  text: {
+    fontWeight: "bold"
+  },
+  cards: {
+    display: 'flex',
+    alignItems: "center",
+    flexWrap: 'wrap',
+  },
+});
 
-  function valuetext(value) {
-    return `${value}`;
+function valuetext(value) {
+  return `${value}`;
+}
+
+function sliderLabels(val) {
+  var marksLabels = [];
+  for (var i = 0; i <= val; i+=Math.floor(val/10)) {
+    let c = {value: i, label: i.toString()};
+    marksLabels.push(c);
   }
-
-  function sliderLabels(val) {
-    var marksLabels = [];
-    for (var i = 0; i <= val; i+=Math.floor(val/10)) {
-      let c = {value: i, label: i.toString()};
-      marksLabels.push(c);
-    }
-    return marksLabels
-  };
+  return marksLabels
+};
 
 class Bandera3 extends Component {
 
@@ -363,7 +323,7 @@ class Bandera3 extends Component {
           </Paper>
         </div>
 
-        <StackedBarChart1 call=""
+        <StackedBarChart4 call="/api/red_flag_3/contratos_anuales_por_adjudicacion/"
           params={{
           	}}
           plotLabel= "Cantidad de contratos anuales por tipo (método) de adjudicación"

@@ -25,109 +25,69 @@ var total = 0;
 var acumulado = 0;
 var timeout;
 
-const colors = [
-    {
-      // blue
-      borderWidth: 0,
-      borderColor: "rgba(101,147,185,1)",
-      backgroundColor: ["rgba(101,147,185,0.8)"],
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(101,147,185,1)",
-      pointHoverBorderColor: "magenta",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // pinky
-      borderWidth: 0,
-      borderColor: "rgba(220,120,220,1)",
-      backgroundColor: "rgba(220,120,220,0.8)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(220,120,220,1)",
-      pointHoverBorderColor: "#333",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // red
-      borderWidth: 0,
-      borderColor: "rgba(247,70,74,1)",
-      backgroundColor: "rgba(247,70,74,0.7)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(247,70,74,1)",
-      pointHoverBorderColor: "rgba(0,0,0,0.7)",
-      pointHoverBorderWidth: 1,
-      pointHoverBackgroundColor: "rgba(247,70,74,1)"
-    },
-    {
-      // lime
-      borderWidth: 0,
-      borderColor: "lime",
-      backgroundColor: "lime",
-      pointBackgroundColor: "lime"
-    }
-  ];
 
-  const styles = theme => ({
-    root: {
-      width: 800,
-    },
-    paper: {
-      padding: theme.spacing(5),
-      display: 'inline-flex',
-      width: '100%',
-      maxHeight: "90vh",
-      position: 'relative',
-      flexGrow: 1,
-      flex: "auto",
-      alignItems: "center",
-      margin: theme.spacing(2, 0),
-    },
-    body: {
-      fontSize: 18,
-      textAlign: 'center',
-    },
-    title: {
-      fontSize: 25,
-      color: '#ff3d00',
-      fontWeight: "bold",
-      textAlign: 'center',
-    },
-    subtitle: {
-      fontSize: 20,
-      color: '#00acc1',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    text: {
-      fontWeight: "bold"
-    }
-  });
-
-  const DataSlider = withStyles({
-    root: {
-      color: '#00acc1',
-    },
-    active: {},
-    track: {
-      height: 3,
-    },
-    rail: {
-      color: '#d8d8d8',
-      height: 2,
-    },
-  })(Slider);
-
-  function valuetext(value) {
-    return `${value}`;
+const styles = theme => ({
+  root: {
+    width: 800,
+  },
+  paper: {
+    padding: theme.spacing(5),
+    display: 'inline-flex',
+    width: '100%',
+    maxHeight: "90vh",
+    position: 'relative',
+    flexGrow: 1,
+    flex: "auto",
+    alignItems: "center",
+    margin: theme.spacing(2, 0),
+  },
+  body: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 25,
+    color: '#ff3d00',
+    fontWeight: "bold",
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#00acc1',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  text: {
+    fontWeight: "bold"
   }
+});
 
-  function sliderLabels(val) {
-    var marksLabels = [];
-    for (var i = 0; i <= val; i+=Math.floor(val/10)) {
-      let c = {value: i, label: i.toString()};
-      marksLabels.push(c);
-    }
-    return marksLabels
-  };
+const DataSlider = withStyles({
+  root: {
+    color: '#00acc1',
+  },
+  active: {},
+  track: {
+    height: 3,
+  },
+  rail: {
+    color: '#d8d8d8',
+    height: 2,
+  },
+})(Slider);
+
+function valuetext(value) {
+  return `${value}`;
+}
+
+function sliderLabels(val) {
+  var marksLabels = [];
+  for (var i = 0; i <= val; i+=Math.floor(val/10)) {
+    let c = {value: i, label: i.toString()};
+    marksLabels.push(c);
+  }
+  return marksLabels
+};
 
 class Bandera1 extends Component {
 

@@ -184,7 +184,11 @@ export default function CenteredTabs(props) {
           <Grid item sm container xs={6}>
             <FiltersTitleCard />
             {/*<ChartCardFlag3 />*/}
-            <Bandera3 />
+            <Bandera3 callB="/api/red_flag_3/contratos_anuales_por_adjudicacion/"
+              params={{
+              	}}
+              plotLabel= "Cantidad de contratos anuales por tipo (método) de adjudicación"
+              labels = {['Directa', 'Abierta', 'Selectiva', 'No asignado']}/>
 
           </Grid>
         </Grid>

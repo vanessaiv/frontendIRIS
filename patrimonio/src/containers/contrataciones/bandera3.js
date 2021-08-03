@@ -22,11 +22,16 @@ import moment from 'moment';
 const rand = () => Math.round(Math.random() * 20 - 10);
 var arreglo_tags = [];
 var datasets_t = [];
-var amounts = [];
 var valor_acumulado = 0;
 var total = 0;
 var acumulado = 0;
 var timeout;
+var dataset1 = [];
+var dataset2 = [];
+var dataset3 = [];
+var dataset4 = [];
+var datas = [];
+var dataLabels = ["procurementMethod", "contractId"];
 
 
 const styles = theme => ({
@@ -99,10 +104,15 @@ class Bandera3 extends Component {
     this.handleEndChange = this.handleEndChange.bind(this);
 
     this.data={}
+    this.newCounter = [1];
     this.state = {
       labels:[],
       datasets:[],
-      amounts:[],
+      dataset: [],
+      datasets1: [],
+      datasets2: [],
+      datasets3: [],
+      datasets4: [],
       acumulados:[],
       values: [],
       startDate: moment("08-12-2016").toDate(),
@@ -111,42 +121,52 @@ class Bandera3 extends Component {
   }
 
   componentWillMount() {
+
     API.post(this.props.callB,
-      {
-        "numero_contratos": "100",
-        "fecha_inicio": "2016-12-08",
-        "fecha_fin": "2018-11-01"
-      })
+      this.props.params)
             .then(response => {
 
+
               response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                datasets_t.push(item["contractId"]);
-                total = datasets_t.reduce((a, b) => a + b, 0)
-                //amounts.push(Math.round(item["totalAmount"]/1000000));
+                arreglo_tags.push(item["_id"]["_datetime"]);
+
+                if (item["_id"][dataLabels[0]] === "Directa") {
+                  dataset1.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "Abierta") {
+                  dataset2.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "Selectiva") {
+                  dataset3.push(item[dataLabels[1]]);
+                }
+                if (item["_id"][dataLabels[0]] === "No asignado") {
+                  dataset4.push(item[dataLabels[1]]);
+                }
+
+
+                datas.push(item);
               });
+
+              arreglo_tags = [...new Set(arreglo_tags)];
 
               var index = 0;
               while (index < arreglo_tags.length) {
                 this.setState(prevState => ({
                     labels: [...prevState.labels, arreglo_tags[index]]
                 }))
-                index++;
-              }
+                  index++;
+                }
 
               index = 0;
-              while (index < datasets_t.length) {
+              while (index < dataset1.length) {
                 this.setState(prevState => ({
-                    datasets: [...prevState.datasets, datasets_t[index]]
+                    datasets1: [...prevState.datasets1, dataset1[index]],
+                    datasets2: [...prevState.datasets2, dataset2[index]],
+                    datasets3: [...prevState.datasets3, dataset3[index]],
+                    datasets4: [...prevState.datasets4, dataset4[index]]
                 }))
-                acumulado += datasets_t[index]
-                valor_acumulado = (acumulado/total)*100
-
-                this.setState(prevState => ({
-                    acumulados: [...prevState.acumulados, valor_acumulado]
-                }))
-                index++;
-              }
+                  index++;
+                }
 
             }).catch(error => {
                 console.log(error);
@@ -166,15 +186,19 @@ class Bandera3 extends Component {
   }
 
   handleChange(event){
+    dataset1 = [];
+    dataset2 = [];
+    dataset3 = [];
+    dataset4 = [];
+    datas = [];
     arreglo_tags = [];
-    datasets_t = [];
-    valor_acumulado = 0;
-    total = 0;
-    acumulado = 0;
 
     this.setState({ datasets: [] });
+    this.setState({ datasets1: [] });
+    this.setState({ datasets2: [] });
+    this.setState({ datasets3: [] });
+    this.setState({ datasets4: [] });
     this.setState({ labels: [] });
-    this.setState({ acumulados: [] });
     var jsonRequest = {
       numero_contratos: event.target.value,
       fecha_inicio: this.state.startDate,
@@ -186,36 +210,51 @@ class Bandera3 extends Component {
       timeout && clearTimeout(timeout),
       timeout = setTimeout(() => {
         API.post(this.props.callB,
-                jsonRequest,{ crossDomain: true }
+                jsonRequest, { crossDomain: true }
                 )
                 .then(response => {
-                  response.data.forEach(function(item) {
-                    arreglo_tags.push(item["_id"]);
-                    datasets_t.push(item["contractId"]);
-                    total = datasets_t.reduce((a, b) => a + b, 0)
 
+
+                  response.data.forEach(function(item) {
+                    arreglo_tags.push(item["_id"]["_datetime"]);
+
+                    if (item["_id"][dataLabels[0]] === "Directa") {
+                      dataset1.push(item[dataLabels[1]]);
+                    }
+                    if (item["_id"][dataLabels[0]] === "Abierta") {
+                      dataset2.push(item[dataLabels[1]]);
+                    }
+                    if (item["_id"][dataLabels[0]] === "Selectiva") {
+                      dataset3.push(item[dataLabels[1]]);
+                    }
+                    if (item["_id"][dataLabels[0]] === "No asignado") {
+                      dataset4.push(item[dataLabels[1]]);
+                    }
+
+
+                    datas.push(item);
                   });
+
+                  arreglo_tags = [...new Set(arreglo_tags)];
+
                   var index = 0;
                   while (index < arreglo_tags.length) {
                     this.setState(prevState => ({
                         labels: [...prevState.labels, arreglo_tags[index]]
                     }))
-                    index++;
-                  }
+                      index++;
+                    }
 
                   index = 0;
-                  while (index < datasets_t.length) {
+                  while (index < dataset1.length) {
                     this.setState(prevState => ({
-                        datasets: [...prevState.datasets, datasets_t[index]]
+                        datasets1: [...prevState.datasets1, dataset1[index]],
+                        datasets2: [...prevState.datasets2, dataset2[index]],
+                        datasets3: [...prevState.datasets3, dataset3[index]],
+                        datasets4: [...prevState.datasets4, dataset4[index]]
                     }))
-                    acumulado += datasets_t[index]
-                    valor_acumulado = (acumulado/total)*100
-
-                    this.setState(prevState => ({
-                        acumulados: [...prevState.acumulados, valor_acumulado]
-                    }))
-                    index++;
-                  }
+                      index++;
+                    }
 
                 }).catch(error => {
                     console.log(error);
@@ -224,55 +263,83 @@ class Bandera3 extends Component {
     )
   }
 
-  componentDidMount(){
-    var max = 0;
-    var min = 0;
 
-    API.post(this.props.callS)
-            .then(response => {
-              response.data.forEach(function(item) {
-                max = item["max"];
-                min = item["min"];
-              });
+  optionsBar() {
+    return {
+      scales: {
+        yAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Número de contratos'
+          }
+        }],
+        xAxes: [{
+          stacked: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Año'
+          }
+        }]
+      },
+      legend: {
+        display: false,
+        position: "bottom",
+        labels: {
+          pointStyle: "circle",
+          usePointStyle: true,
+          fontSize: 16,
+          padding: 13,
 
-              let data = [max, min];
-              var index = 0;
-
-              while (index < data.length) {
-                this.setState(prevState => ({
-                  values: [...prevState.values, data[index]]
-                }))
-                index++;
-              }
-
-            }).catch(error => {
-                console.log(error);
-            });
+        }
+      }
+    };
   }
 
   render() {
 
     const { classes } = this.props;
     this.data  = {
-      datasets: [{
-           label: 'Número de contratos',
-           type: 'bar',
-           data: this.state.datasets,
-           backgroundColor: '#ffc62b',
-           order: 2,
-           yAxisID: 'A'
-        }, {
-            type: 'line',
-            label: 'Porcentaje',
-            borderColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
-            borderWidth: 2,
-            fill: true,
-            data: this.state.acumulados,
-            order: 1,
-            yAxisID: 'B'
-     }],
      labels: this.state.labels,
-   }
+     datasets: [
+       {
+         backgroundColor: '#31c6e8',
+         borderColor: '#31c6e8',
+         borderWidth: 1,
+         hoverBackgroundColor: '#39dbff',
+         hoverBorderColor: '#39dbff',
+         data: this.state.datasets1,
+         label: 'Directa'
+       },
+       {
+         backgroundColor: '#ffd60b',
+         borderColor: '#ffd60b',
+         borderWidth: 1,
+         hoverBackgroundColor: '#ffdd00',
+         hoverBorderColor: '#ffdd00',
+         data: this.state.datasets2,
+         label: 'Abierta'
+       },
+       {
+         backgroundColor: '#bb00ff',
+         borderColor: '#bb00ff',
+         borderWidth: 1,
+         hoverBackgroundColor: '#d901ff',
+         hoverBorderColor: '#d901ff',
+         data: this.state.datasets3,
+         label: 'Selectiva'
+       },
+       {
+         backgroundColor: '#ff602f',
+         borderColor: '#ff602f',
+         borderWidth: 1,
+         hoverBackgroundColor: '#fa5d23',
+         hoverBorderColor: '#fa5d23',
+         data: this.state.datasets4,
+         label: 'No asignado'
+       }
+     ]
+    }
 
     return (
       <div className="container-fluid">
@@ -323,11 +390,20 @@ class Bandera3 extends Component {
           </Paper>
         </div>
 
-        <StackedBarChart4 call="/api/red_flag_3/contratos_anuales_por_adjudicacion/"
-          params={{
-          	}}
-          plotLabel= "Cantidad de contratos anuales por tipo (método) de adjudicación"
-          labels = {['Directa', 'Abierta', 'Selectiva', 'No asignado']}/>
+        <div className="col-sm-12 py-3">
+          <div className="card shadow">
+            <div className="card-body text-center">
+              <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">
+                {this.props.plotLabel}
+              </h5>
+              <Bar
+                responsive={true}
+                options={this.optionsBar()}
+                data={this.data}
+              />
+            </div>
+          </div>
+        </div>
 
         <Grid item sm container xs={6}>
           <DonutChart call="/api/red_flag_3/distribucion_contratos_anuales/" id="contractId"

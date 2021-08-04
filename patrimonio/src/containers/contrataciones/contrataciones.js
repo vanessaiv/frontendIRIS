@@ -217,7 +217,7 @@ export default function CenteredTabs(props) {
               <Bandera4
                 callB="/api/red_flag_4/get_procesos_contratacion/"
                 paramsB={{
-                  "percentage_inicial": "",
+                  "percentage_inicial": 1,
                   "percentage_final": "",
                   "fecha_inicio": "",
                   "fecha_fin": ""

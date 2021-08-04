@@ -31,6 +31,8 @@ var dataset2 = [];
 var dataset3 = [];
 var dataset4 = [];
 var datas = [];
+var numbers = [];
+var numbersM = [];
 var dataLabels = ["procurementMethod", "contractId"];
 
 
@@ -115,6 +117,8 @@ class Bandera3 extends Component {
       datasets4: [],
       acumulados:[],
       values: [],
+      number: [0],
+      numberM: [0],
       startDate: moment("08-12-2016").toDate(),
       endDate: moment("01-11-2018").toDate(),
     }
@@ -171,6 +175,52 @@ class Bandera3 extends Component {
             }).catch(error => {
                 console.log(error);
             });
+
+
+    API.post("/api/red_flag_3/total_contratos/",
+      {
+        fecha_inicio: "2016-08-12",
+        fecha_fin: "2018-11-01"
+      })
+            .then(response => {
+              response.data.forEach(function(item) {
+                numbers.push(item["contractId"]);
+              });
+              console.log(numbers);
+
+              var index = 0;
+              while (index < numbers.length) {
+                this.setState(prevState => ({
+                  number: [...prevState.number, numbers[index]]
+                }))
+                index++;
+              }
+
+            }).catch(error => {
+                console.log(error);
+            });
+
+    API.post("/api/red_flag_3/monto_total/",
+      {
+        fecha_inicio: "2016-08-12",
+        fecha_fin: "2018-11-01"
+      }, { crossDomain: true })
+          .then(response => {
+            response.data.forEach(function(item) {
+              numbersM.push(item["totalAmount"]);
+            });
+
+            var index = 0;
+            while (index < numbersM.length) {
+              this.setState(prevState => ({
+                numberM: [...prevState.numberM, numbersM[index]]
+              }))
+              index++;
+            }
+
+          }).catch(error => {
+              console.log(error);
+          });
   }
 
   handleStartChange = (date) => {
@@ -183,6 +233,14 @@ class Bandera3 extends Component {
     this.setState({
       endDate : date
     })
+  }
+
+  formatNumbers = (value) => {
+    if(parseInt(value) >= 1000){
+      return (Math.round(value / 1e6) + 'M').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      return value;
+    }
   }
 
   handleChange(event){
@@ -261,6 +319,55 @@ class Bandera3 extends Component {
                 })
       }, 500)
     )
+  }
+
+  componentDidMount(){
+
+    API.post("/api/red_flag_3/total_contratos/",
+      {
+        fecha_inicio: this.state.startDate,
+        fecha_fin: this.state.endDate
+      }, { crossDomain: true })
+            .then(response => {
+              response.data.forEach(function(item) {
+                numbers.push(item["contractId"]);
+              });
+              console.log(numbers);
+
+              var index = 0;
+              while (index < numbers.length) {
+                this.setState(prevState => ({
+                  number: [...prevState.number, numbers[index]]
+                }))
+                index++;
+              }
+
+            }).catch(error => {
+                console.log(error);
+            });
+
+
+      API.post("/api/red_flag_3/monto_total/",
+        {
+          fecha_inicio: this.state.startDate,
+          fecha_fin: this.state.endDate
+        }, { crossDomain: true })
+              .then(response => {
+                response.data.forEach(function(item) {
+                  numbersM.push(item["totalAmount"]);
+                });
+
+                var index = 0;
+                while (index < numbersM.length) {
+                  this.setState(prevState => ({
+                    numberM: [...prevState.numberM, numbersM[index]]
+                  }))
+                  index++;
+                }
+
+              }).catch(error => {
+                  console.log(error);
+              });
   }
 
 
@@ -342,6 +449,7 @@ class Bandera3 extends Component {
     }
 
     return (
+      console.log(this.state.number),
       <div className="container-fluid">
         <Paper className={classes.paper}>
 
@@ -374,7 +482,7 @@ class Bandera3 extends Component {
                 NÚMERO DE CONTRATOS:
               </Typography>
               <h3>
-              348379
+              {this.state.number.slice(-1).pop().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </h3>
             </Grid>
           </Paper>
@@ -384,7 +492,9 @@ class Bandera3 extends Component {
                 MONTO TOTAL:
               </Typography>
               <h3>
-              348379
+                {
+                  "$" + this.formatNumbers(this.state.numberM.slice(-1).pop())
+                }
               </h3>
             </Grid>
           </Paper>

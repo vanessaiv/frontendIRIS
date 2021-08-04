@@ -116,18 +116,14 @@ class Bandera4 extends Component {
       amounts:[],
       acumulados:[],
       values: [],
-      startDate: moment("08-12-2016").toDate(),
-      endDate: moment("01-11-2018").toDate(),
+      startDate: "",
+      endDate: "",
     }
   }
 
   componentWillMount() {
     API.post(this.props.callB,
-      {
-        "numero_contratos": "100",
-        "fecha_inicio": "2016-12-08",
-        "fecha_fin": "2018-11-01"
-      })
+      this.props.paramsB)
             .then(response => {
 
               response.data.forEach(function(item) {
@@ -187,7 +183,8 @@ class Bandera4 extends Component {
     this.setState({ labels: [] });
     this.setState({ acumulados: [] });
     var jsonRequest = {
-      numero_contratos: event.target.value,
+      percentage_inicial: 1,
+	    percentage_final: event.target.value,
       fecha_inicio: this.state.startDate,
       fecha_fin: this.state.endDate
     }
@@ -321,7 +318,7 @@ class Bandera4 extends Component {
 
           <DataSlider
             max={this.state.values[0]}
-            value={this.state.value ? this.state.value: 100}
+            value={this.state.value ? this.state.value: 2}
             onChange={this.handleChange}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"

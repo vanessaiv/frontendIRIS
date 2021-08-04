@@ -97,6 +97,7 @@ class General extends Component {
   }
 
   componentDidMount() {
+    this.setState({ lista: [] });
 
     API.post(this.props.callD, this.props.paramsD)
             .then(response => {

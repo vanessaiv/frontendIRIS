@@ -120,10 +120,6 @@ class LineGrafica extends Component {
 
 
   mergeColorsIntoLineData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
     return {
       ...srcData,
       datasets: srcData.datasets.map((dataset, k) => {
@@ -148,10 +144,7 @@ class LineGrafica extends Component {
          label: this.props.data1Label,
          yAxisID: 'A',
          backgroundColor: '#0d9deb',
-         //borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasets,
          order: 2,
        },
@@ -159,10 +152,7 @@ class LineGrafica extends Component {
          label: this.props.data2Label,
          yAxisID: 'B',
          backgroundColor: '#ff962d',
-         //borderColor: 'rgba(230,80,112,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(230,80,112,0.4)',
-         //hoverBorderColor: 'rgba(230,80,112,1)',
          data: this.state.datasetsa,
          order: 1,
        }
@@ -215,7 +205,6 @@ class LineGrafica extends Component {
       </div>
     );
   }
-
 
 }
 

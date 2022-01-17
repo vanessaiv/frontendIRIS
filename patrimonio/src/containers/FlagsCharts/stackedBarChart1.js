@@ -31,87 +31,186 @@ class BarGrafica extends Component {
     }
   }
 
+  componentDidMount() {
+      var arreglo_tags = [];
+      var dataset1 = [];
+      var dataset2 = [];
+      var dataset3 = [];
+      var dataset4 = [];
+      var dataset5 = [];
+      var dataset6 = [];
+      var dataset7 = [];
+      var dataset8 = [];
+      var dataset9 = [];
+      var dataset10 = [];
+      var datas = [];
+      var dataLabels = [
+        "sueldos_salarios_otros_empleos",
+        "sueldos_salarios_publicos",
+        "actividad_economica_menor",
+        "actividad_empresarial",
+        "actividad_profesional",
+        "arrendamiento",
+        "intereses",
+        "premios",
+        "enajenacion_bienes",
+        "otros_ingresos"];
+      var label1 = this.props.label1;
+      var label2 = this.props.label2;
 
 
-  componentWillMount() {
-    var arreglo_tags = [];
-    var dataset1 = [];
-    var dataset2 = [];
-    var dataset3 = [];
-    var dataset4 = [];
-    var dataset5 = [];
-    var dataset6 = [];
-    var dataset7 = [];
-    var dataset8 = [];
-    var dataset9 = [];
-    var dataset10 = [];
-    var datas = [];
-    var dataLabels = [
-      "sueldos_salarios_otros_empleos",
-      "sueldos_salarios_publicos",
-      "actividad_economica_menor",
-      "actividad_empresarial",
-      "actividad_profesional",
-      "arrendamiento",
-      "intereses",
-      "premios",
-      "enajenacion_bienes",
-      "otros_ingresos"];
-    var label1 = this.props.label1;
-    var label2 = this.props.label2;
-
-    API.post(this.props.call,
-      this.props.params)
-            .then(response => {
+      API.post(this.props.call,
+        this.props.params)
+              .then(response => {
 
 
-              response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                dataset1.push(item[dataLabels[0]]);
-                dataset2.push(item[dataLabels[1]]);
-                dataset3.push(item[dataLabels[2]]);
-                dataset4.push(item[dataLabels[3]]);
-                dataset5.push(item[dataLabels[4]]);
-                dataset6.push(item[dataLabels[5]]);
-                dataset7.push(item[dataLabels[6]]);
-                dataset8.push(item[dataLabels[7]]);
-                dataset9.push(item[dataLabels[8]]);
-                dataset10.push(item[dataLabels[9]]);
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  dataset1.push(item[dataLabels[0]]);
+                  dataset2.push(item[dataLabels[1]]);
+                  dataset3.push(item[dataLabels[2]]);
+                  dataset4.push(item[dataLabels[3]]);
+                  dataset5.push(item[dataLabels[4]]);
+                  dataset6.push(item[dataLabels[5]]);
+                  dataset7.push(item[dataLabels[6]]);
+                  dataset8.push(item[dataLabels[7]]);
+                  dataset9.push(item[dataLabels[8]]);
+                  dataset10.push(item[dataLabels[9]]);
 
-                datas.push(item);
-                console.log(dataset1);
+                  datas.push(item);
+
+                });
+
+
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
+                    index++;
+                  }
+
+                index = 0;
+                while (index < dataset1.length) {
+                  this.setState(prevState => ({
+                      datasets1: [...prevState.datasets1, dataset1[index]],
+                      datasets2: [...prevState.datasets2, dataset2[index]],
+                      datasets3: [...prevState.datasets3, dataset3[index]],
+                      datasets4: [...prevState.datasets4, dataset4[index]],
+                      datasets5: [...prevState.datasets5, dataset5[index]],
+                      datasets6: [...prevState.datasets6, dataset6[index]],
+                      datasets7: [...prevState.datasets7, dataset7[index]],
+                      datasets8: [...prevState.datasets8, dataset8[index]],
+                      datasets9: [...prevState.datasets9, dataset9[index]],
+                      datasets10: [...prevState.datasets10, dataset10[index]]
+                  }))
+                    index++;
+                  }
+
+
+              }).catch(error => {
+                  console.log(error);
               });
 
-
-              var index = 0;
-              while (index < arreglo_tags.length) {
-                this.setState(prevState => ({
-                    labels: [...prevState.labels, arreglo_tags[index]]
-                }))
-                  index++;
-                }
-
-              index = 0;
-              while (index < dataset1.length) {
-                this.setState(prevState => ({
-                    datasets1: [...prevState.datasets1, dataset1[index]],
-                    datasets2: [...prevState.datasets2, dataset2[index]],
-                    datasets3: [...prevState.datasets3, dataset3[index]],
-                    datasets4: [...prevState.datasets4, dataset4[index]],
-                    datasets5: [...prevState.datasets5, dataset5[index]],
-                    datasets6: [...prevState.datasets6, dataset6[index]],
-                    datasets7: [...prevState.datasets7, dataset7[index]],
-                    datasets8: [...prevState.datasets8, dataset8[index]],
-                    datasets9: [...prevState.datasets9, dataset9[index]],
-                    datasets10: [...prevState.datasets10, dataset10[index]]
-                }))
-                  index++;
-                }
+  }
 
 
-            }).catch(error => {
-                console.log(error);
-            });
+  componentDidUpdate(prevProps) {
+    if (this.props.params !== prevProps.params){
+      var arreglo_tags = [];
+      var dataset1 = [];
+      var dataset2 = [];
+      var dataset3 = [];
+      var dataset4 = [];
+      var dataset5 = [];
+      var dataset6 = [];
+      var dataset7 = [];
+      var dataset8 = [];
+      var dataset9 = [];
+      var dataset10 = [];
+      var datas = [];
+      var dataLabels = [
+        "sueldos_salarios_otros_empleos",
+        "sueldos_salarios_publicos",
+        "actividad_economica_menor",
+        "actividad_empresarial",
+        "actividad_profesional",
+        "arrendamiento",
+        "intereses",
+        "premios",
+        "enajenacion_bienes",
+        "otros_ingresos"];
+      var label1 = this.props.label1;
+      var label2 = this.props.label2;
+      this.setState({labels:[],
+        datasets:[],
+        datasetsa:[],
+        dataset: [],
+        fdataset: [],
+        datasets1: [],
+        datasets2: [],
+        datasets3: [],
+        datasets4: [],
+        datasets5: [],
+        datasets6: [],
+        datasets7: [],
+        datasets8: [],
+        datasets9: [],
+        datasets10: [],});
+
+      API.post(this.props.call,
+        this.props.params)
+              .then(response => {
+
+
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  dataset1.push(item[dataLabels[0]]);
+                  dataset2.push(item[dataLabels[1]]);
+                  dataset3.push(item[dataLabels[2]]);
+                  dataset4.push(item[dataLabels[3]]);
+                  dataset5.push(item[dataLabels[4]]);
+                  dataset6.push(item[dataLabels[5]]);
+                  dataset7.push(item[dataLabels[6]]);
+                  dataset8.push(item[dataLabels[7]]);
+                  dataset9.push(item[dataLabels[8]]);
+                  dataset10.push(item[dataLabels[9]]);
+
+                  datas.push(item);
+                  console.log(dataset1);
+                });
+
+
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
+                    index++;
+                  }
+
+                index = 0;
+                while (index < dataset1.length) {
+                  this.setState(prevState => ({
+                      datasets1: [...prevState.datasets1, dataset1[index]],
+                      datasets2: [...prevState.datasets2, dataset2[index]],
+                      datasets3: [...prevState.datasets3, dataset3[index]],
+                      datasets4: [...prevState.datasets4, dataset4[index]],
+                      datasets5: [...prevState.datasets5, dataset5[index]],
+                      datasets6: [...prevState.datasets6, dataset6[index]],
+                      datasets7: [...prevState.datasets7, dataset7[index]],
+                      datasets8: [...prevState.datasets8, dataset8[index]],
+                      datasets9: [...prevState.datasets9, dataset9[index]],
+                      datasets10: [...prevState.datasets10, dataset10[index]]
+                  }))
+                    index++;
+                  }
+
+
+              }).catch(error => {
+                  console.log(error);
+              });
+    }
   }
 
   optionsBar() {

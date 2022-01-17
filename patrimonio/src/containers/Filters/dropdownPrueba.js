@@ -20,7 +20,8 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 200,
+    maxWidth: 290,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -70,9 +71,9 @@ class Dropdown extends Component{
   render(){
     const { classes } = this.props;
     const handleChange = (event) => {
-      this.setState({item: event.target.value})
+      this.props.handleInstitutionChange(event.target.value);
     };
-    console.log(this.state.item);
+
     return(
       <div className={classes.root}>
         <Paper >
@@ -81,7 +82,7 @@ class Dropdown extends Component{
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={this.state.item}
+              value={this.props.item ? this.props.item: this.state.item}
               onChange={handleChange}
               displayEmpty
             >

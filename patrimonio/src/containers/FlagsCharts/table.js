@@ -60,7 +60,6 @@ class ListaServidores extends React.Component {
     this.setAnchorEl = null;
     this.setOpen = true;
     this.ITEM_HEIGHT = 48;
-    //this.nombreUsuario = localStorage.getItem("nombreUsuario");
   }
 
   getMuiTheme = () =>
@@ -235,7 +234,7 @@ class ListaServidores extends React.Component {
                   data={this.state.A}
                   columns={this.columns}
                   options={{
-                    selectableRows: false // <===== will turn off checkboxes in rows
+                    selectableRows: false
 
                   }}
                 />

@@ -26,51 +26,108 @@ class BarGrafica extends Component {
       datasets8: [],
       datasets9: [],
       datasets10: [],
-
     }
   }
 
+  componentDidMount() {
+      var arreglo_tags = [];
+      var dataset1 = [];
+      var dataset2 = [];
+      var dataLabels = [
+        "deudas",
+        "otras_obligaciones"];
 
 
-  componentWillMount() {
-    var arreglo_tags = [];
-    var dataset1 = [];
-    var dataset2 = [];
-    var dataLabels = [
-      "deudas",
-      "otras_obligaciones"];
-
-    API.post(this.props.call,
-      this.props.params)
-            .then(response => {
+      API.post(this.props.call,
+        this.props.params)
+              .then(response => {
 
 
-              response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                dataset1.push(item[dataLabels[0]]);
-                dataset2.push(item[dataLabels[1]]);
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  dataset1.push(item[dataLabels[0]]);
+                  dataset2.push(item[dataLabels[1]]);
+                });
+
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
+                    index++;
+                  }
+
+                index = 0;
+                while (index < dataset1.length) {
+                  this.setState(prevState => ({
+                      datasets1: [...prevState.datasets1, dataset1[index]],
+                      datasets2: [...prevState.datasets2, dataset2[index]],
+                  }))
+                    index++;
+                  }
+
+              }).catch(error => {
+                  console.log(error);
               });
 
-              var index = 0;
-              while (index < arreglo_tags.length) {
-                this.setState(prevState => ({
-                    labels: [...prevState.labels, arreglo_tags[index]]
-                }))
-                  index++;
-                }
+  }
 
-              index = 0;
-              while (index < dataset1.length) {
-                this.setState(prevState => ({
-                    datasets1: [...prevState.datasets1, dataset1[index]],
-                    datasets2: [...prevState.datasets2, dataset2[index]],
-                }))
-                  index++;
-                }
+  componentDidUpdate(prevProps) {
+    if (this.props.params !== prevProps.params){
+      var arreglo_tags = [];
+      var dataset1 = [];
+      var dataset2 = [];
+      var dataLabels = [
+        "deudas",
+        "otras_obligaciones"];
+      this.setState({labels:[],
+        datasets:[],
+        datasetsa:[],
+        dataset: [],
+        fdataset: [],
+        datasets1: [],
+        datasets2: [],
+        datasets3: [],
+        datasets4: [],
+        datasets5: [],
+        datasets6: [],
+        datasets7: [],
+        datasets8: [],
+        datasets9: [],
+        datasets10: [],});
 
-            }).catch(error => {
-                console.log(error);
-            });
+      API.post(this.props.call,
+        this.props.params)
+              .then(response => {
+
+
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  dataset1.push(item[dataLabels[0]]);
+                  dataset2.push(item[dataLabels[1]]);
+                });
+
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
+                    index++;
+                  }
+
+                index = 0;
+                while (index < dataset1.length) {
+                  this.setState(prevState => ({
+                      datasets1: [...prevState.datasets1, dataset1[index]],
+                      datasets2: [...prevState.datasets2, dataset2[index]],
+                  }))
+                    index++;
+                  }
+
+              }).catch(error => {
+                  console.log(error);
+              });
+    }
   }
 
   optionsBar() {

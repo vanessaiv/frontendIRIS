@@ -105,8 +105,8 @@ class Bandera1 extends Component {
       amounts:[],
       acumulados:[],
       values: [],
-      startDate: moment("08-12-2016").toDate(),
-      endDate: moment("01-11-2018").toDate(),
+      startDate: new Date(2016,11,8),
+      endDate: new Date(2018,10,1),
     }
   }
 

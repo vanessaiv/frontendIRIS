@@ -1,13 +1,7 @@
 import React, {Component } from 'react';
 import API from '../../Utils/Api';
 import {
-  defaults,
-  Line,
-  Bar,
-  Pie,
-  Pie as Donut,
-  Bubble,
-  Radar
+  Pie as Donut
 } from "react-chartjs-2";
 
 
@@ -65,10 +59,11 @@ class DonutGrafica extends Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
     var arreglo_tags = [];
     var datasets_t = [];
     var id = this.props.id;
+
     API.post(this.props.call, this.props.params)
             .then(response => {
 
@@ -117,10 +112,6 @@ class DonutGrafica extends Component {
 
 
   mergeColorsIntoPieData(srcData) {
-    /* This function merges from "global" colors array into pie data colors.
-     * Since pie charts use an arr of backgroundColor for each pie segment, we
-     * resample from the other color arr indexes and push onto backgroundColor
-    */
     return {
       ...srcData,
       datasets: srcData.datasets.map((dataset, k) => {

@@ -1,51 +1,87 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import API from '../../Utils/Api';
 import {
   Line
 } from "react-chartjs-2";
 
 
-class BarGrafica extends Component {
+class LineGrafica extends Component {
 
   constructor(props) {
     super(props)
     this.data={}
-    this.newCounter = [1];
     this.state = {
       labels:[],
       datasets:[],
-      datasetsa:[],
-      datasetsb: [],
+      datasetsa:[]
     }
   }
 
+  componentDidMount() {
+    var arreglo_tags = [];
+    var datasets_t = [];
+    var datasets_a = [];
+    var label1 = this.props.label1;
+    var label2 = this.props.label2;
+
+    API.post(this.props.call,
+      this.props.params
+    )
+            .then(response => {
+
+              response.data.forEach(function(item) {
+                arreglo_tags.push(item["_id"]);
+                datasets_t.push(item[label1]);
+                datasets_a.push(item[label2]);
+
+              });
+              var index = 0;
+              while (index < arreglo_tags.length) {
+                this.setState(prevState => ({
+                    labels: [...prevState.labels, arreglo_tags[index]]
+                }))
+
+                  index++;
+                }
+
+              index = 0;
+              while (index < datasets_t.length) {
+                this.setState(prevState => ({
+                    datasets: [...prevState.datasets, datasets_t[index]]
+                }))
+
+                this.setState(prevState => ({
+                    datasetsa: [...prevState.datasetsa, datasets_a[index]]
+                }))
+
+                index++;
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+  }
 
 
   componentDidUpdate(prevProps) {
     if (this.props.params !== prevProps.params){
+
       var arreglo_tags = [];
-      var datasets1 = [];
-      var datasets2 = [];
-      var datasets3 = []
+      var datasets_t = [];
+      var datasets_a = [];
       var label1 = this.props.label1;
       var label2 = this.props.label2;
-      var label3 = this.props.label3;
-      this.setState({labels:[],
-        datasets:[],
-        datasetsa:[],
-        datasetsb:[]});
+      this.setState({labels:[], datasets:[], datasetsa:[]});
 
       API.post(this.props.call,
         this.props.params
       )
               .then(response => {
 
-
                 response.data.forEach(function(item) {
                   arreglo_tags.push(item["_id"]);
-                  datasets1.push(item[label1]);
-                  datasets2.push(item[label2]);
-                  datasets3.push(item[label3]);
+                  datasets_t.push(item[label1]);
+                  datasets_a.push(item[label2]);
+
                 });
 
                 var index = 0;
@@ -53,40 +89,31 @@ class BarGrafica extends Component {
                   this.setState(prevState => ({
                       labels: [...prevState.labels, arreglo_tags[index]]
                   }))
+
                     index++;
                   }
 
                 index = 0;
-                while (index < datasets1.length) {
+                while (index < datasets_t.length) {
                   this.setState(prevState => ({
-                      datasets: [...prevState.datasets, datasets1[index]],
-                      datasetsa: [...prevState.datasetsa, datasets2[index]],
-                      datasetsb: [...prevState.datasetsb, datasets3[index]]
+                      datasets: [...prevState.datasets, datasets_t[index]]
                   }))
-                  index++;
-                }
 
+                  this.setState(prevState => ({
+                      datasetsa: [...prevState.datasetsa, datasets_a[index]]
+                  }))
+
+                  index++;
+                  }
               }).catch(error => {
                   console.log(error);
               });
     }
   }
 
-  optionsLine() {
-    return {
-      cutoutPercentage: 65,
-      legend: {
-        position: "bottom",
-        labels: {
-          pointStyle: "circle",
-          usePointStyle: true
-        }
-      }
-    };
-  }
-
 
   render() {
+
     this.data  = {
       labels: this.state.labels,
       datasets: [
@@ -105,21 +132,13 @@ class BarGrafica extends Component {
          borderWidth: 1,
          data: this.state.datasetsa,
          order: 1,
-       },
-       {
-         label: this.props.data3Label,
-         yAxisID: 'B',
-         backgroundColor: '#ffd220',
-         borderWidth: 1,
-         data: this.state.datasetsb,
-         order: 1,
        }
      ],
 
   }
 
     return (
-      <div className="col-sm-12 py-3">
+      <div className="col-sm-6 py-3">
         <div className="card shadow">
           <div className="card-body text-center">
             <h5 style={{ color: '#4d4c4c' , fontWeight: "bold" }} className="mb-4">{this.props.plotLabel}</h5>
@@ -129,23 +148,13 @@ class BarGrafica extends Component {
               options={{
                 scales: {
                   yAxes: [{
-                    ticks: {
-                      callback: function(value, index, values) {
-                          return value / 1e6 + 'M';
-                        }
-                      },
                     display: true,
                     id: 'A',
                     type: 'linear',
                     position: 'left',
                     labelString: 'Monto (MDP)'
                   }, {
-                    ticks: {
-                      callback: function(value, index, values) {
-                          return value / 1e6 + 'M';
-                        }
-                      },
-                    display: true,
+                    display: false,
                     id: 'B',
                     type: 'linear',
                     position: 'right',
@@ -162,9 +171,8 @@ class BarGrafica extends Component {
                   labels: {
                     pointStyle: "circle",
                     usePointStyle: true,
-                    fontSize: 16,
+                    fontSize: 15,
                     padding: 13,
-
                   }
                 }
               }}
@@ -175,8 +183,7 @@ class BarGrafica extends Component {
     );
   }
 
-
 }
 
 
-export default BarGrafica;
+export default LineGrafica;

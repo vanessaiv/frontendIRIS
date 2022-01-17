@@ -4,48 +4,6 @@ import {
   Line
 } from "react-chartjs-2";
 
-
-const colors = [
-    {
-      // blue
-      borderWidth: 0,
-      borderColor: "rgba(101,147,185,1)",
-      backgroundColor: ["rgba(101,147,185,0.8)"],
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(101,147,185,1)",
-      pointHoverBorderColor: "magenta",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // pinky
-      borderWidth: 0,
-      borderColor: "rgba(220,120,220,1)",
-      backgroundColor: "rgba(220,120,220,0.8)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(220,120,220,1)",
-      pointHoverBorderColor: "#333",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // red
-      borderWidth: 0,
-      borderColor: "rgba(247,70,74,1)",
-      backgroundColor: "rgba(247,70,74,0.7)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(247,70,74,1)",
-      pointHoverBorderColor: "rgba(0,0,0,0.7)",
-      pointHoverBorderWidth: 1,
-      pointHoverBackgroundColor: "rgba(247,70,74,1)"
-    },
-    {
-      // lime
-      borderWidth: 0,
-      borderColor: "lime",
-      backgroundColor: "lime",
-      pointBackgroundColor: "lime"
-    }
-  ];
-
 class LineGrafica extends Component {
 
   constructor(props) {
@@ -60,50 +18,56 @@ class LineGrafica extends Component {
     }
   }
 
-  componentWillMount() {
-    var arreglo_tags = [];
-    var datasets1 = [];
-    var datasets2 = [];
-    var datasets3 = [];
-    var label1 = this.props.label1;
-    var label2 = this.props.label2;
-    var label3 = this.props.label3;
+  componentDidUpdate(prevProps) {
+    if (this.props.params !== prevProps.params){
+      var arreglo_tags = [];
+      var datasets1 = [];
+      var datasets2 = [];
+      var datasets3 = [];
+      var label1 = this.props.label1;
+      var label2 = this.props.label2;
+      var label3 = this.props.label3;
+      this.setState({labels:[],
+        datasets:[],
+        datasetsa:[],
+        datasetsb:[]});
 
-    API.post(this.props.call,
-      this.props.params
-    )
-            .then(response => {
+      API.post(this.props.call,
+        this.props.params
+      )
+              .then(response => {
 
 
-              response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                datasets1.push(item[label1]);
-                datasets2.push(item[label2]);
-                datasets3.push(item[label3]);
-              });
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  datasets1.push(item[label1]);
+                  datasets2.push(item[label2]);
+                  datasets3.push(item[label3]);
+                });
 
-              var index = 0;
-              while (index < arreglo_tags.length) {
-                this.setState(prevState => ({
-                    labels: [...prevState.labels, arreglo_tags[index]]
-                }))
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
+                    index++;
+                  }
+
+                index = 0;
+                while (index < datasets1.length) {
+                  this.setState(prevState => ({
+                      datasets: [...prevState.datasets, datasets1[index]],
+                      datasetsa: [...prevState.datasetsa, datasets2[index]],
+                      datasetsb: [...prevState.datasetsb, datasets3[index]]
+                  }))
+
                   index++;
-                }
+                  }
 
-              index = 0;
-              while (index < datasets1.length) {
-                this.setState(prevState => ({
-                    datasets: [...prevState.datasets, datasets1[index]],
-                    datasetsa: [...prevState.datasetsa, datasets2[index]],
-                    datasetsb: [...prevState.datasetsb, datasets3[index]]
-                }))
-
-                index++;
-                }
-
-            }).catch(error => {
-                console.log(error);
-            });
+              }).catch(error => {
+                  console.log(error);
+              });
+    }
   }
 
   optionsLine() {
@@ -120,22 +84,6 @@ class LineGrafica extends Component {
   }
 
 
-  mergeColorsIntoLineData(srcData) {
-    return {
-      ...srcData,
-      datasets: srcData.datasets.map((dataset, k) => {
-        colors[k].backgroundColor = [colors[k].backgroundColor.toString()];
-        colors[k].backgroundColor.push(
-          colors[k + 1].backgroundColor.toString()
-        );
-        colors[k].backgroundColor.push(
-          colors[k + 2].backgroundColor.toString()
-        );
-        return { ...dataset, ...colors[k] };
-      })
-    };
-  }
-
   render() {
 
     this.data  = {
@@ -145,10 +93,7 @@ class LineGrafica extends Component {
          label: this.props.data1Label,
          yAxisID: 'A',
          backgroundColor: '#697ed1',
-         //borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasets,
          order: 2,
        },
@@ -156,10 +101,7 @@ class LineGrafica extends Component {
          label: this.props.data2Label,
          yAxisID: 'A',
          backgroundColor: '#69d1bc',
-         //borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasetsa,
          order: 2,
        },
@@ -167,10 +109,7 @@ class LineGrafica extends Component {
          label: this.props.data3Label,
          yAxisID: 'A',
          backgroundColor: '#d16973',
-         //borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasetsb,
          order: 3,
        },
@@ -223,7 +162,6 @@ class LineGrafica extends Component {
       </div>
     );
   }
-
 
 }
 

@@ -5,47 +5,6 @@ import {
 } from "react-chartjs-2";
 
 
-const colors = [
-    {
-      // blue
-      borderWidth: 0,
-      borderColor: "rgba(101,147,185,1)",
-      backgroundColor: ["rgba(101,147,185,0.8)"],
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(101,147,185,1)",
-      pointHoverBorderColor: "magenta",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // pinky
-      borderWidth: 0,
-      borderColor: "rgba(220,120,220,1)",
-      backgroundColor: "rgba(220,120,220,0.8)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(220,120,220,1)",
-      pointHoverBorderColor: "#333",
-      pointHoverBorderWidth: 1
-    },
-    {
-      // red
-      borderWidth: 0,
-      borderColor: "rgba(247,70,74,1)",
-      backgroundColor: "rgba(247,70,74,0.7)",
-      pointBackgroundColor: "rgba(255,255,255,0.8)",
-      pointBorderColor: "rgba(247,70,74,1)",
-      pointHoverBorderColor: "rgba(0,0,0,0.7)",
-      pointHoverBorderWidth: 1,
-      pointHoverBackgroundColor: "rgba(247,70,74,1)"
-    },
-    {
-      // lime
-      borderWidth: 0,
-      borderColor: "lime",
-      backgroundColor: "lime",
-      pointBackgroundColor: "lime"
-    }
-  ];
-
 class BarGrafica extends Component {
 
   constructor(props) {
@@ -59,50 +18,54 @@ class BarGrafica extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.params !== prevProps.params){
+      var arreglo_tags = [];
+      var datasets_t = [];
+      var datasets_a = [];
+      var label1 = this.props.label1;
+      var label2 = this.props.label2;
+      this.setState({labels:[],
+        datasets:[],
+        datasetsa:[]});
+
+      API.post(this.props.call,
+        this.props.params
+      )
+              .then(response => {
 
 
-  componentWillMount() {
-    var arreglo_tags = [];
-    var datasets_t = [];
-    var datasets_a = [];
-    var label1 = this.props.label1;
-    var label2 = this.props.label2;
-    API.post(this.props.call,
-      this.props.params
-    )
-            .then(response => {
+                response.data.forEach(function(item) {
+                  arreglo_tags.push(item["_id"]);
+                  datasets_t.push(item[label1]);
+                  datasets_a.push(item[label2]);
 
+                });
+                var index = 0;
+                while (index < arreglo_tags.length) {
+                  this.setState(prevState => ({
+                      labels: [...prevState.labels, arreglo_tags[index]]
+                  }))
 
-              response.data.forEach(function(item) {
-                arreglo_tags.push(item["_id"]);
-                datasets_t.push(item[label1]);
-                datasets_a.push(item[label2]);
+                    index++;
+                  }
 
-              });
-              var index = 0;
-              while (index < arreglo_tags.length) {
-                this.setState(prevState => ({
-                    labels: [...prevState.labels, arreglo_tags[index]]
-                }))
+                index = 0;
+                while (index < datasets_t.length) {
+                  this.setState(prevState => ({
+                      datasets: [...prevState.datasets, datasets_t[index]]
+                  }))
+
+                  this.setState(prevState => ({
+                      datasetsa: [...prevState.datasetsa, datasets_a[index]]
+                  }))
 
                   index++;
-                }
-
-              index = 0;
-              while (index < datasets_t.length) {
-                this.setState(prevState => ({
-                    datasets: [...prevState.datasets, datasets_t[index]]
-                }))
-
-                this.setState(prevState => ({
-                    datasetsa: [...prevState.datasetsa, datasets_a[index]]
-                }))
-
-                index++;
-                }
-            }).catch(error => {
-                console.log(error);
-            });
+                  }
+              }).catch(error => {
+                  console.log(error);
+              });
+    }
   }
 
   optionsLine() {
@@ -119,22 +82,6 @@ class BarGrafica extends Component {
   }
 
 
-  mergeColorsIntoLineData(srcData) {
-    return {
-      ...srcData,
-      datasets: srcData.datasets.map((dataset, k) => {
-        colors[k].backgroundColor = [colors[k].backgroundColor.toString()];
-        colors[k].backgroundColor.push(
-          colors[k + 1].backgroundColor.toString()
-        );
-        colors[k].backgroundColor.push(
-          colors[k + 2].backgroundColor.toString()
-        );
-        return { ...dataset, ...colors[k] };
-      })
-    };
-  }
-
   render() {
     this.data  = {
       labels: this.state.labels,
@@ -143,10 +90,7 @@ class BarGrafica extends Component {
          label: this.props.data1Label,
          yAxisID: 'A',
          backgroundColor: '#0d9deb',
-         //borderColor: 'rgba(255,99,132,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-         //hoverBorderColor: 'rgba(255,99,132,1)',
          data: this.state.datasets,
          order: 2,
        },
@@ -154,10 +98,7 @@ class BarGrafica extends Component {
          label: this.props.data2Label,
          yAxisID: 'B',
          backgroundColor: '#ffd220',
-         //borderColor: 'rgba(230,80,112,1)',
          borderWidth: 1,
-         //hoverBackgroundColor: 'rgba(230,80,112,0.4)',
-         //hoverBorderColor: 'rgba(230,80,112,1)',
          data: this.state.datasetsa,
          order: 1,
        }
@@ -221,8 +162,6 @@ class BarGrafica extends Component {
       </div>
     );
   }
-
-
 }
 
 
